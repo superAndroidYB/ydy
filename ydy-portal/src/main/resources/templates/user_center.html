@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<title>个人中心</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<link rel="stylesheet" href="css/mui.min.css">
+<link
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+	rel="stylesheet">
+<script type="text/javascript" src="js/mui.min.js"></script>
+<style type="text/css">
+.content {
+	color: #ffffff;
+	font-size: 40px;
+}
+
+.bg {
+	background: url('images/a.jpg');
+	height: 230px;
+	text-align: center;
+	line-height: 230px;
+}
+
+.bg-blur {
+	float: left;
+	width: 100%;
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: cover;
+	-webkit-filter: blur(5px);
+	-moz-filter: blur(5px);
+	-o-filter: blur(5px);
+	-ms-filter: blur(5px);
+	filter: blur(5px);
+}
+
+.content-front {
+	position: absolute;
+	left: 10px;
+	right: 10px;
+	height: 150px;
+	line-height: 150px;
+	text-align: center;
+}
+
+.aligncenter {
+	text-align: center;
+}
+
+.content {
+	color: #ffffff;
+	font-size: 40px;
+}
+
+.card {
+	position: absolute;
+	top: 230px;
+	width: 100%;
+}
+</style>
+</head>
+<body>
+	<div>
+		<div class="bg bg-blur"></div>
+		<div class="content content-front">
+			<img src="images/muwu.jpg" width="100px" height="100px"
+				style="margin-top: 10px;" class="img-circle">
+			<h4>
+				<strong>张三</strong>
+			</h4>
+			<h4>推荐人：李四</h4>
+		</div>
+		<div class="mui-content card">
+			<div class="mui-card">
+				<div class="mui-card-header">
+					<table style="width: 100%">
+						<tr>
+							<td><div class="mui-icon mui-icon-flag"></div>推荐码</td>
+							<td><font style="font-size: 30px; color: green">888888</font></td>
+						</tr>
+					</table>
+				</div>
+			</div>
+			<ul class="mui-table-view">
+				<li class="mui-table-view-cell"><a class="mui-navigate-right"
+					style="font-size: 20px"> 我要进货 </a></li>
+				<li class="mui-table-view-cell"><a class="mui-navigate-right"
+					style="font-size: 20px"> 我的订单 </a></li>
+				<li class="mui-table-view-cell"><a class="mui-navigate-right"
+					style="font-size: 20px"> 我推荐的人 </a></li>
+				<li class="mui-table-view-cell"><a class="mui-navigate-right"
+					style="font-size: 20px"> 我的分红 </a></li>
+			</ul>
+		</div>
+	</div>
+
+</body>
+
+<script type="text/javascript">
+	
+</script>
+</html>
