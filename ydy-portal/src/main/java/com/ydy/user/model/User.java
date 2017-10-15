@@ -6,10 +6,11 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
-@Table(name = "YDY_USER")
-public class User extends WxUser{
+@Table(name = "ydy_user")
+public class User{
 
 	@Id
 	@Column(name = "ID_", length = 50)
@@ -17,6 +18,14 @@ public class User extends WxUser{
 
 	@Column(name = "USER_MOBILE_", length = 11)
 	private String userMobile;
+	
+	@Column(name = "PASSWORD_", length = 100)
+	private String password;
+	
+	@Transient
+	private String confrimPassword;
+	@Transient
+	private String rondomCode;
 
 	@Column(name = "USER_NAME_", length = 100)
 	private String userName;
@@ -143,4 +152,30 @@ public class User extends WxUser{
 	public void setDeleteFlag(String deleteFlag) {
 		this.deleteFlag = deleteFlag;
 	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public String getRondomCode() {
+		return rondomCode;
+	}
+
+	public void setRondomCode(String rondomCode) {
+		this.rondomCode = rondomCode;
+	}
+
+	public String getConfrimPassword() {
+		return confrimPassword;
+	}
+
+	public void setConfrimPassword(String confrimPassword) {
+		this.confrimPassword = confrimPassword;
+	}
+	
+	
 }
