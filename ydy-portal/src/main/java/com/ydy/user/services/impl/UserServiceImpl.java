@@ -1,5 +1,7 @@
 package com.ydy.user.services.impl;
 
+import java.util.UUID;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +20,14 @@ public class UserServiceImpl implements IUserService {
 	public boolean checkMobileExtis(String mobile) {
 		User user = userDao.findByUserMobileAndDeleteFlag(mobile, Constants.NO);
 		return user != null;
+	}
+
+	@Override
+	public User doUserRegister(User user) {
+		user.setId(UUID.randomUUID().toString());
+		user.setDeleteFlag(Constants.NO);
+		userDao.save(user);
+		return user;
 	}
 
 }

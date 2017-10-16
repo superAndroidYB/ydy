@@ -22,15 +22,15 @@
 <body>
 	<div class="mui-content">
 		<img src="images/a.jpg" width="100%" height="auto" />
-		<form id="userinfo" action="" class="mui-input-group">
+		<form id="userinfo" onsubmit="return doRegister();" class="mui-input-group">
 			<div class="mui-input-row">
 				<label>手机号码</label><input type="text" name="userMobile"
 					id="userMobile" value="13005476407" class="mui-input-clear" required="required"
 					placeholder="请输入手机号码">
 			</div>
 			<div class="mui-input-row">
-				<label>验&nbsp;&nbsp;证&nbsp;&nbsp;码</label> <input type="text"
-					class="mui-input" style="width: 40%; float: left"
+				<label>验&nbsp;&nbsp;证&nbsp;&nbsp;码</label> <input type="number"
+					class="mui-input" style="width: 40%; float: left" name="rondomCode"
 					required="required" placeholder="请输入验证码"> <a id="sendbut"
 					href="javascript:void(0)" onclick="sendRondomCode()"
 					style="width: 25%; float: right; font-family: 'Helvetica Neue', Helvetica, sans-serif; padding-top: 10px;">获取验证码</a>
@@ -90,9 +90,9 @@
 					if(result.success){
 						res = true;
 					}else{
-						mui.toast(result.msg);
 						res = false;
 					}
+					mui.toast(result.msg);
 				},
 				error : function(result){
 					mui.toast(result.msg);
@@ -100,6 +100,33 @@
 				}
 			});
 			return res;
+		}
+		
+		function doRegister(){
+			var data = $("#userinfo").serializeArray();
+			console.log(data);
+			if(data[2].value != data[3].value){
+				mui.toast("两次输入的密码不一致！");
+				return false;
+			}
+			
+			$.ajax({
+				url : "doRegister",
+				data : $("#userinfo").serialize(),
+				async : false,
+				success : function(result) {
+					if(result.success){
+						window.location = "wait";
+					}else{
+						mui.toast(result.msg);
+					}
+				},
+				error : function(result){
+					mui.toast(result.msg);
+					res = false;
+				}
+			});
+			return false;
 		}
 	</script>
 </body>

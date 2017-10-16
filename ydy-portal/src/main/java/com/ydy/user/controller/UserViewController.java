@@ -75,5 +75,9 @@ public class UserViewController {
 	public String dividendDetail(Model model) {
 		return "dividend_detail";
 	}
-
+	
+	@RequestMapping(value = "/wait", method = { RequestMethod.GET, RequestMethod.POST })
+	public String wait(Model model){
+		return "wait";
+	}
 }
