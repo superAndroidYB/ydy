@@ -104,7 +104,6 @@
 		
 		function doRegister(){
 			var data = $("#userinfo").serializeArray();
-			console.log(data);
 			if(data[2].value != data[3].value){
 				mui.toast("两次输入的密码不一致！");
 				return false;
@@ -116,17 +115,15 @@
 				async : false,
 				success : function(result) {
 					if(result.success){
-						window.location = "wait";
+						window.location = "register_info";
 					}else{
 						mui.toast(result.msg);
 					}
 				},
 				error : function(result){
 					mui.toast(result.msg);
-					res = false;
 				}
 			});
-			return false;
 		}
 	</script>
 </body>

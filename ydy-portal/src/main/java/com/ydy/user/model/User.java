@@ -2,9 +2,13 @@ package com.ydy.user.model;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -26,6 +30,8 @@ public class User{
 	private String confrimPassword;
 	@Transient
 	private String rondomCode;
+	@Transient
+	private String address;
 
 	@Column(name = "USER_NAME_", length = 100)
 	private String userName;
@@ -35,27 +41,24 @@ public class User{
 
 	@Column(name = "RECOM_CODE_", length = 100)
 	private String recomCode;
-
-	@Column(name = "REFERRER_ID_", length = 50)
-	private String referrerId;
-
-	@Column(name = "REFERRER_NAME_", length = 100)
-	private String referrerName;
+	
+	@OneToOne(cascade = { CascadeType.REFRESH, CascadeType.MERGE }, optional = true)
+	@JoinColumn(name = "REFERRER_ID_")
+	private User referrerUser;
 
 	@Column(name = "USER_LEVEL_")
 	private int userLevel;
 
-	@Column(name = "ROOT_USER_ID_", length = 50)
-	private String rootUserId;
-
-	@Column(name = "HAS_CHILD_", length = 1)
-	private String hasChild;
+	@OneToOne(cascade = { CascadeType.REFRESH, CascadeType.MERGE }, optional = true)
+	@JoinColumn(name = "ROOT_USER_ID_")
+	private User rootUser;
 
 	@Column(name = "CREATE_TIME_")
 	private Date createTime;
 	
 	@Column(name = "DELETE_FLAG_", length = 1)
 	private String deleteFlag;
+	
 
 	public String getId() {
 		return id;
@@ -97,44 +100,12 @@ public class User{
 		this.recomCode = recomCode;
 	}
 
-	public String getReferrerId() {
-		return referrerId;
-	}
-
-	public void setReferrerId(String referrerId) {
-		this.referrerId = referrerId;
-	}
-
-	public String getReferrerName() {
-		return referrerName;
-	}
-
-	public void setReferrerName(String referrerName) {
-		this.referrerName = referrerName;
-	}
-
 	public int getUserLevel() {
 		return userLevel;
 	}
 
 	public void setUserLevel(int userLevel) {
 		this.userLevel = userLevel;
-	}
-
-	public String getRootUserId() {
-		return rootUserId;
-	}
-
-	public void setRootUserId(String rootUserId) {
-		this.rootUserId = rootUserId;
-	}
-
-	public String getHasChild() {
-		return hasChild;
-	}
-
-	public void setHasChild(String hasChild) {
-		this.hasChild = hasChild;
 	}
 
 	public Date getCreateTime() {
@@ -175,6 +146,30 @@ public class User{
 
 	public void setConfrimPassword(String confrimPassword) {
 		this.confrimPassword = confrimPassword;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public User getReferrerUser() {
+		return referrerUser;
+	}
+
+	public void setReferrerUser(User referrerUser) {
+		this.referrerUser = referrerUser;
+	}
+
+	public User getRootUser() {
+		return rootUser;
+	}
+
+	public void setRootUser(User rootUser) {
+		this.rootUser = rootUser;
 	}
 	
 	

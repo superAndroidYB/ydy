@@ -1,13 +1,16 @@
 package com.ydy.user.controller;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.ydy.user.model.User;
 import com.ydy.user.services.IUserService;
+import com.ydy.utils.Constants;
 
 @Controller
 public class UserViewController {
@@ -36,13 +39,12 @@ public class UserViewController {
 	}
 
 	@RequestMapping(path = "/register_info", method = { RequestMethod.GET, RequestMethod.POST })
-	public String registerInfo() {
+	public String registerInfo(String id, Model model) {
 		return "register_info";
 	}
 
 	@RequestMapping(value = "/login", method = { RequestMethod.GET, RequestMethod.POST })
 	public String login(Model model) {
-		model.addAttribute("hello", "Hello World!");
 		return "login";
 	}
 
@@ -57,7 +59,16 @@ public class UserViewController {
 	}
 
 	@RequestMapping(value = "/user_center", method = { RequestMethod.GET, RequestMethod.POST })
-	public String userCenter(Model model) {
+	public String userCenter(Model model,HttpSession session) {
+		//User user = (User) session.getAttribute(Constants.USER);
+		User user = new User();
+		user.setRecomCode("34504503");
+		user.setUserName("Jeck");
+		User referrerUser = new User();
+		referrerUser.setRecomCode("34504503");
+		referrerUser.setUserName("Rose");
+		user.setReferrerUser(referrerUser);
+		model.addAttribute("user", user);
 		return "user_center";
 	}
 

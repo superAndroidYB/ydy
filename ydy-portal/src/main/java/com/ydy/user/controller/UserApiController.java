@@ -71,12 +71,19 @@ public class UserApiController {
 		String code = (String) session.getAttribute("randomCode");
 		System.out.println("code:"+code);
 		if(StringUtils.equals(user.getRondomCode(), code)){
-			userService.doUserRegister(user);
+			user.setUserType(Constants.USER_TYPE_PARTNER);
 			responseDto = new ResponseDto(true, "注册成功！");
+			responseDto.setData(userService.doUserRegister(user));
 		}else{
 			responseDto = new ResponseDto(false, "验证码不正确，请输入短信中收到的验证码");
+			
 		}
 		return ResponseEntity.ok(responseDto);
+	}
+	
+	@RequestMapping(path = "/doRegisterInfo", method = { RequestMethod.GET, RequestMethod.POST })
+	public ResponseEntity<ResponseDto> doRegisterInfo(User user){
+		return ResponseEntity.ok(userService.doRegisterInfo(user));
 	}
 	
 

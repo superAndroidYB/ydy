@@ -14,25 +14,45 @@
 <body>
 	<div class="mui-content">
 		<img src="images/c.jpg" width="100%" height="auto" />
-		<form class="mui-input-group">
+		<form id="userinfo" onsubmit="return doSubmit()" class="mui-input-group">
 			<div class="mui-input-row">
-				<label>真实姓名</label><input type="text" class="mui-input-clear"
-					placeholder="请输入真实姓名">
+				<label>真实姓名</label><input type="text" class="mui-input-clear" required="required"
+					name="userName" placeholder="请输入真实姓名">
 			</div>
 			<div class="mui-input-row" style="height: 100px">
 				<label>联系地址</label>
-				<textarea id="textarea" rows="5" placeholder="请填写可收货地址，方便日后进货事宜"></textarea>
+				<textarea id="address" rows="5" name="address" required="required"
+					placeholder="请填写可收货地址，方便日后进货事宜"></textarea>
 			</div>
 			<div class="mui-input-row" style="height: 100px">
 				<label>推&nbsp;&nbsp;荐&nbsp;&nbsp;码</label>
-				<textarea id="textarea" rows="5"
+				<textarea id="recomCode" rows="5" name="recomCode"
 					placeholder="推荐码在推荐人用户中心查看，如没有推荐人，请不要填写"></textarea>
 			</div>
 			<div class="mui-button-row">
-				<button type="button" class="mui-btn mui-btn-primary">下一步</button>
+				<button type="submit" class="mui-btn mui-btn-primary">下一步</button>
 				<button type="button" class="mui-btn mui-btn-danger">取消</button>
 			</div>
 		</form>
 	</div>
+	<script type="text/javascript">
+		function doSubmit() {
+			$.ajax({
+				url : "doRegisterInfo",
+				data : $("#userinfo").serialize(),
+				async : false,
+				success : function(result) {
+					if(result.success){
+						window.location = "wait";
+					}else{
+						mui.toast(result.msg);
+					}
+				},
+				error : function(result){
+					mui.toast(result.msg);
+				}
+			});
+		}
+	</script>
 </body>
 </html>

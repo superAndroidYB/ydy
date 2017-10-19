@@ -71,9 +71,9 @@
 			<img src="images/muwu.jpg" width="100px" height="100px"
 				style="margin-top: 10px;" class="img-circle">
 			<h4>
-				<strong>张三</strong>
+				<strong th:text="${user.userName}">张三</strong>
 			</h4>
-			<h4>推荐人：李四</h4>
+			<h4 th:text="${user.referrerUser.userName}">推荐人：李四</h4>
 		</div>
 		<div class="mui-content card">
 			<div class="mui-card">
@@ -81,7 +81,7 @@
 					<table style="width: 100%">
 						<tr>
 							<td><div class="mui-icon mui-icon-flag"></div>推荐码</td>
-							<td><font style="font-size: 30px; color: green">888888</font></td>
+							<td><font style="font-size: 30px; color: green" th:text="${user.recomCode}">888888</font></td>
 						</tr>
 					</table>
 				</div>
