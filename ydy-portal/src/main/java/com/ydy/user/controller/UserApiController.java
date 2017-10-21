@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -60,7 +61,7 @@ public class UserApiController {
 	}
 	
 	@RequestMapping(path = "/doRegister", method = { RequestMethod.GET, RequestMethod.POST })
-	public ResponseEntity<ResponseDto> doRegister(User user, HttpSession session) {
+	public ResponseEntity<ResponseDto> doRegister(Model model, User user, HttpSession session) {
 		ResponseDto responseDto;
 		boolean mobileExtis = userService.checkMobileExtis(user.getUserMobile());
 		if(mobileExtis){
@@ -71,14 +72,20 @@ public class UserApiController {
 		String code = (String) session.getAttribute("randomCode");
 		System.out.println("code:"+code);
 		if(StringUtils.equals(user.getRondomCode(), code)){
-			user.setUserType(Constants.USER_TYPE_PARTNER);
+			user.setUserType(Constants.UserType.USER_TYPE_PARTNER.getCode());
 			responseDto = new ResponseDto(true, "注册成功！");
-			responseDto.setData(userService.doUserRegister(user));
+			User userDB = userService.doUserRegister(user);
+			responseDto.setData(userDB);
+			model.addAttribute("user", userDB);
 		}else{
 			responseDto = new ResponseDto(false, "验证码不正确，请输入短信中收到的验证码");
-			
 		}
 		return ResponseEntity.ok(responseDto);
+	}
+	
+	@RequestMapping(path = "/doVerifRecomCode", method = { RequestMethod.GET, RequestMethod.POST })
+	public ResponseEntity<ResponseDto> doVerifRecomCode(User user){
+		return ResponseEntity.ok(userService.doVerifRecomCode(user));
 	}
 	
 	@RequestMapping(path = "/doRegisterInfo", method = { RequestMethod.GET, RequestMethod.POST })

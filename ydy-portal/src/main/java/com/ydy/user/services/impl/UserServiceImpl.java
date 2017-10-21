@@ -44,14 +44,21 @@ public class UserServiceImpl implements IUserService {
 
 	@Override
 	public ResponseDto doRegisterInfo(User user) {
+		ResponseDto verifRes = doVerifRecomCode(user);
+		if(verifRes != null){
+			return verifRes;
+		}
+		
 		User userDB = userDao.findOne(user.getId());
 		userDB.setUserName(user.getUserName());
 		userDB.setRecomCode(user.getRecomCode());
+		userDB.setStatus(Constants.UserStatus.USER_STATUS_REGISTER.getCode());
 		
 		//保存地址
 		Address address = new Address();
 		address.setId(UUID.randomUUID().toString());
 		address.setUser(userDB);
+		address.setAddress(user.getAddress());
 		address.setIsDefault(Constants.YES);
 		addressDao.save(address);
 		
@@ -75,10 +82,23 @@ public class UserServiceImpl implements IUserService {
 	 */
 	private User getRootUser(User user){
 		if(user.getReferrerUser() == null){
-			return user.getReferrerUser();
+			return user;
 		}else{
 			return getRootUser(user);
 		}
+	}
+
+	@Override
+	public ResponseDto doVerifRecomCode(User user) {
+		if(user != null && StringUtils.isNotBlank(user.getRecomCode())){
+			User userDB = userDao.findByRecomCodeAndDeleteFlag(user.getRecomCode(), Constants.NO);
+			if(userDB == null){
+				return new ResponseDto(false, "您填写的推荐码系统中不存在，请确认是否输入正确，如没有推荐人，请不要填写！");
+			}else{
+				return new ResponseDto(true, String.format("推荐人为%s，请确认无误后继续！", userDB.getUserName()));
+			}
+		}
+		return null;
 	}
 
 }

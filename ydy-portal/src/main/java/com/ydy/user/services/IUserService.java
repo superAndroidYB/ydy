@@ -13,5 +13,7 @@ public interface IUserService {
 	public User findUserById(String id);
 	
 	public ResponseDto doRegisterInfo(User user);
+	
+	public ResponseDto doVerifRecomCode(User user);
 
 }

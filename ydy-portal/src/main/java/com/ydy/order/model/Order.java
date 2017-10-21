@@ -3,14 +3,17 @@ package com.ydy.order.model;
 import java.math.BigDecimal;
 import java.util.Date;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
+import com.ydy.user.model.Address;
 import com.ydy.user.model.User;
 
 @Entity
@@ -21,9 +24,18 @@ public class Order {
 	@Column(name = "ID_", length = 50)
 	private String id;
 
-	@ManyToOne(cascade = { CascadeType.REFRESH, CascadeType.MERGE }, optional = true)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "USER_ID_")
 	private User user;
+	
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "ADDRESS_ID_")
+	private Address address;
+	
+	@Transient
+	private String addressId;
+	@Transient
+	private String addressStr;
 
 	@Column(name = "APPLY_NUM_", length = 18, scale = 2)
 	private BigDecimal applyNum;
@@ -183,4 +195,29 @@ public class Order {
 	public void setAgreeTime(Date agreeTime) {
 		this.agreeTime = agreeTime;
 	}
+
+	public Address getAddress() {
+		return address;
+	}
+
+	public void setAddress(Address address) {
+		this.address = address;
+	}
+
+	public String getAddressId() {
+		return addressId;
+	}
+
+	public void setAddressId(String addressId) {
+		this.addressId = addressId;
+	}
+
+	public String getAddressStr() {
+		return addressStr;
+	}
+
+	public void setAddressStr(String addressStr) {
+		this.addressStr = addressStr;
+	}
+	
 }

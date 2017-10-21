@@ -19,27 +19,59 @@
 <body>
 	<div>
 		<img src="images/c.jpg" width="100%" height="auto" />
-		<form class="mui-input-group">
+		<form id="stockForm" class="mui-input-group" onsubmit="return doStock();">
 			<div class="mui-input-row" style="height: 50px">
 				<label style="width: 40%">请输入进货数量（单位：箱）</label>
 				<div class="mui-numbox">
 					<button class="mui-btn mui-btn-numbox-minus" type="button">-</button>
-					<input class="mui-input-numbox" type="number" />
+					<input name="applyNum" class="mui-input-numbox" type="number" />
 					<button class="mui-btn mui-btn-numbox-plus" type="button">+</button>
 				</div>
 			</div>
 			<div class="mui-input-row" style="height: 100px">
 				<label>联系地址</label>
-				<textarea id="textarea" rows="5" placeholder="请填写收货地址，或从已录入地址中选择"></textarea>
+				<textarea id="textarea" rows="5" name="addressStr" style="width: 50%; float: left;"
+				placeholder="请填写收货地址，或从已录入地址中选择"></textarea>
+				<a style="width: 15%;float: right; margin-top: 40px"><span class="mui-icon mui-icon-bars"></span></a>
+			</div>
+			<div class="mui-input-row" style="height: 100px">
+				<label>备注</label>
+				<textarea id="textarea" rows="5" name="applyMemo" placeholder="请填写一些进货备注事项（可以不填）"></textarea>
+			</div>
+			
+			<div style="margin-right: 10px; margin-left: 10px">
+				<br>
+				<button type="submit" class="mui-btn mui-btn-primary mui-btn-block">确认</button>
+				<button type="reset" class="mui-btn mui-btn-block">取消</button>
 			</div>
 		</form>
 
 		
-		<div style="margin-right: 10px; margin-left: 10px">
-			<br>
-			<button type="button" class="mui-btn mui-btn-primary mui-btn-block">确认</button>
-			<button type="button" class="mui-btn mui-btn-block">取消</button>
-		</div>
 	</div>
+	
+	<script type="text/javascript">
+		function doStock(){
+			var res = false;
+			$.ajax({
+				url : "doRegisterInfo",
+				data : $("#stockForm").serialize(),
+				async : false,
+				success : function(result) {
+					if(result.success){
+						res = true;
+						window.location = "stockWait";
+					}else{
+						mui.toast(result.msg);
+						res = false;
+					}
+				},
+				error : function(result){
+					mui.toast(result.msg);
+					res = false;
+				}
+			});
+			return false;
+		}
+	</script>
 </body>
 </html>

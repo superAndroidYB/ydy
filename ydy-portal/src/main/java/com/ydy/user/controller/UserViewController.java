@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.ydy.user.model.User;
 import com.ydy.user.services.IUserService;
-import com.ydy.utils.Constants;
 
 @Controller
 public class UserViewController {
@@ -40,6 +39,8 @@ public class UserViewController {
 
 	@RequestMapping(path = "/register_info", method = { RequestMethod.GET, RequestMethod.POST })
 	public String registerInfo(String id, Model model) {
+		User user = userService.findUserById(id);
+		model.addAttribute("user", user);
 		return "register_info";
 	}
 
@@ -53,10 +54,6 @@ public class UserViewController {
 		return "register";
 	}
 
-	@RequestMapping(value = "/stock", method = { RequestMethod.GET, RequestMethod.POST })
-	public String stock(Model model) {
-		return "stock";
-	}
 
 	@RequestMapping(value = "/user_center", method = { RequestMethod.GET, RequestMethod.POST })
 	public String userCenter(Model model,HttpSession session) {

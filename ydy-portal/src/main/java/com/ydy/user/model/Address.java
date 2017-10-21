@@ -3,6 +3,7 @@ package com.ydy.user.model;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -16,7 +17,7 @@ public class Address {
 	@Column(name = "ID_", length = 50)
 	private String id;
 
-	@ManyToOne(cascade = { CascadeType.REFRESH, CascadeType.MERGE }, optional = true)
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name = "USER_ID_")
 	private User user;
 	
