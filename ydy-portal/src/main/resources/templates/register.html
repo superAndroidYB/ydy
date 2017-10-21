@@ -108,22 +108,26 @@
 				mui.toast("两次输入的密码不一致！");
 				return false;
 			}
-			
+			var res = false;
 			$.ajax({
 				url : "doRegister",
 				data : $("#userinfo").serialize(),
 				async : false,
 				success : function(result) {
 					if(result.success){
+						res = true;
 						window.location = "register_info";
 					}else{
 						mui.toast(result.msg);
+						res = false;
 					}
 				},
 				error : function(result){
 					mui.toast(result.msg);
+					res = false;
 				}
 			});
+			return false;
 		}
 	</script>
 </body>

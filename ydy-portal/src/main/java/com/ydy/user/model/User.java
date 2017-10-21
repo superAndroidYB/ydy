@@ -1,20 +1,25 @@
 package com.ydy.user.model;
 
 import java.util.Date;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import com.ydy.order.model.Order;
+
 @Entity
 @Table(name = "ydy_user")
-public class User{
+public class User {
 
 	@Id
 	@Column(name = "ID_", length = 50)
@@ -22,10 +27,10 @@ public class User{
 
 	@Column(name = "USER_MOBILE_", length = 11)
 	private String userMobile;
-	
+
 	@Column(name = "PASSWORD_", length = 100)
 	private String password;
-	
+
 	@Transient
 	private String confrimPassword;
 	@Transient
@@ -41,24 +46,32 @@ public class User{
 
 	@Column(name = "RECOM_CODE_", length = 100)
 	private String recomCode;
-	
-	@OneToOne(cascade = { CascadeType.REFRESH, CascadeType.MERGE }, optional = true)
+
+	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "REFERRER_ID_")
 	private User referrerUser;
 
 	@Column(name = "USER_LEVEL_")
 	private int userLevel;
 
-	@OneToOne(cascade = { CascadeType.REFRESH, CascadeType.MERGE }, optional = true)
+	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "ROOT_USER_ID_")
 	private User rootUser;
 
+	@OneToMany(mappedBy = "user")
+	private Set<Address> addresses;
+	
+	@OneToMany(mappedBy = "user")
+	private Set<Order> orders;
+
 	@Column(name = "CREATE_TIME_")
 	private Date createTime;
-	
+
+	@Column(name = "STATUS_", length = 1)
+	private String status;
+
 	@Column(name = "DELETE_FLAG_", length = 1)
 	private String deleteFlag;
-	
 
 	public String getId() {
 		return id;
@@ -171,6 +184,30 @@ public class User{
 	public void setRootUser(User rootUser) {
 		this.rootUser = rootUser;
 	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public Set<Address> getAddresses() {
+		return addresses;
+	}
+
+	public void setAddresses(Set<Address> addresses) {
+		this.addresses = addresses;
+	}
+
+	public Set<Order> getOrders() {
+		return orders;
+	}
+
+	public void setOrders(Set<Order> orders) {
+		this.orders = orders;
+	}
 	
-	
+
 }

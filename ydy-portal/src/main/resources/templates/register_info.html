@@ -15,6 +15,7 @@
 	<div class="mui-content">
 		<img src="images/c.jpg" width="100%" height="auto" />
 		<form id="userinfo" onsubmit="return doSubmit()" class="mui-input-group">
+			<input type="hidden" th:value="${user.id}" name="id"/>
 			<div class="mui-input-row">
 				<label>真实姓名</label><input type="text" class="mui-input-clear" required="required"
 					name="userName" placeholder="请输入真实姓名">
@@ -52,6 +53,7 @@
 					mui.toast(result.msg);
 				}
 			});
+			return false;
 		}
 	</script>
 </body>

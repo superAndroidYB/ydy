@@ -47,6 +47,7 @@ public class UserServiceImpl implements IUserService {
 		User userDB = userDao.findOne(user.getId());
 		userDB.setUserName(user.getUserName());
 		userDB.setRecomCode(user.getRecomCode());
+		userDB.setStatus(Constants.UserStatus.USER_STATUS_REGISTER.getCode());
 		
 		//保存地址
 		Address address = new Address();
