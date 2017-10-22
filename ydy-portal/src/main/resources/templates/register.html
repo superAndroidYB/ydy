@@ -116,6 +116,7 @@
 				success : function(result) {
 					if(result.success){
 						res = true;
+						res = true;
 						setLocalUser(result.data);
 						window.location = "register_info?id="+result.data.id;
 					}else{
