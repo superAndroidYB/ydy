@@ -10,8 +10,186 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
 <link rel="stylesheet" href="css/mui.min.css">
 <script type="text/javascript" src="js/mui.min.js"></script>
+<!--App自定义的css-->
+<link rel="stylesheet" type="text/css" href="css/app.css" />
+<script type="text/javascript" src="js/mui.min.js"></script>
+<script src="js/jquery-3.2.1.min.js"></script>
+<script src="js/ydy.js"></script>
+<style>
+	.mui-card .mui-control-content {
+		padding: 10px;
+	}
+	
+	.mui-control-content {
+		height: 500px;
+	}
+</style>
 </head>
 <body>
-
+	<div class="mui-content">
+		<div style="padding: 10px 10px;">
+			<div id="segmentedControl" class="mui-segmented-control">
+				<a class="mui-control-item mui-active" href="#item1">同级分红</a>
+				<a class="mui-control-item" href="#item2">服务分红</a>
+				<a class="mui-control-item" href="#item3">月度绩效分红</a>
+			</div>
+		</div>
+		
+		<div>
+			<div id="item1" class="mui-control-content mui-active">
+				<div id="scroll" class="mui-scroll-wrapper">
+					<div class="mui-scroll">
+						<ul class="mui-table-view">
+							<li class="mui-table-view-cell">
+								第一个选项卡子项-1
+							</li>
+							<li class="mui-table-view-cell">
+								第一个选项卡子项-2
+							</li>
+							<li class="mui-table-view-cell">
+								第一个选项卡子项-3
+							</li>
+							<li class="mui-table-view-cell">
+								第一个选项卡子项-4
+							</li>
+							<li class="mui-table-view-cell">
+								第一个选项卡子项-5
+							</li>
+							<li class="mui-table-view-cell">
+								第一个选项卡子项-6
+							</li>
+							<li class="mui-table-view-cell">
+								第一个选项卡子项-7
+							</li>
+							<li class="mui-table-view-cell">
+								第一个选项卡子项-8
+							</li>
+							<li class="mui-table-view-cell">
+								第一个选项卡子项-9
+							</li>
+							<li class="mui-table-view-cell">
+								第一个选项卡子项-10
+							</li>
+							<li class="mui-table-view-cell">
+								第一个选项卡子项-11
+							</li>
+							<li class="mui-table-view-cell">
+								第一个选项卡子项-12
+							</li>
+							<li class="mui-table-view-cell">
+								第一个选项卡子项-13
+							</li>
+							<li class="mui-table-view-cell">
+								第一个选项卡子项-14
+							</li>
+							<li class="mui-table-view-cell">
+								第一个选项卡子项-15
+							</li>
+							<li class="mui-table-view-cell">
+								第一个选项卡子项-16
+							</li>
+							<li class="mui-table-view-cell">
+								第一个选项卡子项-17
+							</li>
+							<li class="mui-table-view-cell">
+								第一个选项卡子项-18
+							</li>
+							<li class="mui-table-view-cell">
+								第一个选项卡子项-19
+							</li>
+							<li class="mui-table-view-cell">
+								第一个选项卡子项-20
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div id="item2" class="mui-control-content">
+				<ul class="mui-table-view">
+				    <li class="mui-table-view-cell mui-media">
+				        <a href="javascript:;">
+				            <img class="mui-media-object mui-pull-left" src="images/shuijiao.jpg">
+				            <div class="mui-media-body">
+				                幸福
+				                <p class='mui-ellipsis'>能和心爱的人一起睡觉，是件幸福的事情；可是，打呼噜怎么办？</p>
+				            </div>
+				        </a>
+				    </li>
+				    <li class="mui-table-view-cell mui-media">
+				        <a href="javascript:;">
+				            <img class="mui-media-object mui-pull-left" src="images/muwu.jpg">
+				            <div class="mui-media-body">
+				                木屋
+				                <p class='mui-ellipsis'>想要这样一间小木屋，夏天挫冰吃瓜，冬天围炉取暖.</p>
+				            </div>
+				        </a>
+				    </li>
+				    <li class="mui-table-view-cell mui-media">
+				        <a href="javascript:;">
+				            <img class="mui-media-object mui-pull-left" src="images/cbd.jpg">
+				            <div class="mui-media-body">
+				                CBD
+				                <p class='mui-ellipsis'>烤炉模式的城，到黄昏，如同打翻的调色盘一般.</p>
+				            </div>
+				        </a>
+				    </li>
+				</ul>
+			</div>
+			<div id="item3" class="mui-control-content">
+				<ul class="mui-table-view">
+				    <li class="mui-table-view-cell mui-media">
+				        <a href="javascript:;">
+				            <img class="mui-media-object mui-pull-left" src="images/shuijiao.jpg">
+				            <div class="mui-media-body">
+				                幸福
+				                <p class='mui-ellipsis'>能和心爱的人一起睡觉，是件幸福的事情；可是，打呼噜怎么办？</p>
+				            </div>
+				        </a>
+				    </li>
+				    <li class="mui-table-view-cell mui-media">
+				        <a href="javascript:;">
+				            <img class="mui-media-object mui-pull-left" src="images/muwu.jpg">
+				            <div class="mui-media-body">
+				                木屋
+				                <p class='mui-ellipsis'>想要这样一间小木屋，夏天挫冰吃瓜，冬天围炉取暖.</p>
+				            </div>
+				        </a>
+				    </li>
+				    <li class="mui-table-view-cell mui-media">
+				        <a href="javascript:;">
+				            <img class="mui-media-object mui-pull-left" src="images/cbd.jpg">
+				            <div class="mui-media-body">
+				                CBD
+				                <p class='mui-ellipsis'>烤炉模式的城，到黄昏，如同打翻的调色盘一般.</p>
+				            </div>
+				        </a>
+				    </li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	
+	<script>
+			mui.init({
+				swipeBack: true //启用右滑关闭功能
+			});
+			(function($) {
+				$('#scroll').scroll({
+					indicators: true //是否显示滚动条
+				});
+				var segmentedControl = document.getElementById('segmentedControl');
+				$('.mui-input-group').on('change', 'input', function() {
+					if (this.checked) {
+						var styleEl = document.querySelector('input[name="style"]:checked');
+						var colorEl = document.querySelector('input[name="color"]:checked');
+						if (styleEl && colorEl) {
+							var style = styleEl.value;
+							var color = colorEl.value;
+							segmentedControl.className = 'mui-segmented-control' + (style ? (' mui-segmented-control-' + style) : '') + ' mui-segmented-control-' + color;
+						}
+					}
+				});
+			})(mui);
+		</script>
 </body>
 </html>
