@@ -9,11 +9,94 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
 <link rel="stylesheet" href="css/mui.min.css">
+<link
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+	rel="stylesheet">
 <script type="text/javascript" src="js/mui.min.js"></script>
 <script src="js/jquery-3.2.1.min.js"></script>
 <script src="js/ydy.js"></script>
+<style type="text/css">
+.content {
+	color: #ffffff;
+	font-size: 40px;
+}
+
+.bg {
+	background: url('images/a.jpg');
+	height: 230px;
+	text-align: center;
+	line-height: 230px;
+}
+
+.bg-blur {
+	float: left;
+	width: 100%;
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: cover;
+	-webkit-filter: blur(5px);
+	-moz-filter: blur(5px);
+	-o-filter: blur(5px);
+	-ms-filter: blur(5px);
+	filter: blur(5px);
+}
+
+.content-front {
+	position: absolute;
+	left: 10px;
+	right: 10px;
+	height: 150px;
+	line-height: 150px;
+	text-align: center;
+}
+
+.aligncenter {
+	text-align: center;
+}
+
+.content {
+	color: #ffffff;
+	font-size: 40px;
+}
+
+.card {
+	position: absolute;
+	top: 230px;
+	width: 100%;
+}
+</style>
 </head>
 <body>
+	<div>
+		<div class="bg bg-blur"></div>
+		<div class="content content-front">
+			<img src="images/muwu.jpg" width="100px" height="100px"
+				style="margin-top: 10px;" class="img-circle">
+			<h2>
+				<strong >张三</strong><!-- th:text="${user.userName}" -->
+			</h2>
+		</div>
+	</div>
+	<div class="mui-content">
+		<div class="mui-row">
+	        <div class="mui-col-sm-6 mui-col-xs-12">
+	            <div class="mui-card">
+					<!--页眉，放置标题-->
+					<div class="mui-card-header">订单中心</div>
+					<!--内容区-->
+					<div class="mui-card-content">&nbsp;&nbsp;&nbsp;&nbsp;点击查看</div>
+				</div>
+	        </div>
+	        <div class="mui-col-sm-6 mui-col-xs-12">
+	            <div class="mui-card">
+					<!--页眉，放置标题-->
+					<div class="mui-card-header">合伙人中心</div>
+					<!--内容区-->
+					<div class="mui-card-content">&nbsp;&nbsp;&nbsp;&nbsp;点击查看</div>
+				</div>
+	        </div>
+	    </div>
+	</div>
 
 </body>
 </html>
