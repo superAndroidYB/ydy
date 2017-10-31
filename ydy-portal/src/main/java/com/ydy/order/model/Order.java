@@ -16,21 +16,21 @@ import javax.persistence.Transient;
 import com.ydy.user.model.Address;
 import com.ydy.user.model.User;
 
-@Entity
-@Table(name = "YDY_ORDER")
+//@Entity
+//@Table(name = "YDY_ORDER")
 public class Order {
 
 	@Id
 	@Column(name = "ID_", length = 50)
 	private String id;
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "USER_ID_")
-	private User user;
-	
-	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "ADDRESS_ID_")
-	private Address address;
+//	@ManyToOne(fetch = FetchType.LAZY)
+//	@JoinColumn(name = "USER_ID_")
+//	private User user;
+//	
+//	@OneToOne(fetch = FetchType.LAZY)
+//	@JoinColumn(name = "ADDRESS_ID_")
+//	private Address address;
 	
 	@Transient
 	private String addressId;
@@ -83,14 +83,14 @@ public class Order {
 	public void setId(String id) {
 		this.id = id;
 	}
-
-	public User getUser() {
-		return user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
-	}
+//
+//	public User getUser() {
+//		return user;
+//	}
+//
+//	public void setUser(User user) {
+//		this.user = user;
+//	}
 
 	public BigDecimal getApplyNum() {
 		return applyNum;
@@ -196,13 +196,13 @@ public class Order {
 		this.agreeTime = agreeTime;
 	}
 
-	public Address getAddress() {
-		return address;
-	}
-
-	public void setAddress(Address address) {
-		this.address = address;
-	}
+//	public Address getAddress() {
+//		return address;
+//	}
+//
+//	public void setAddress(Address address) {
+//		this.address = address;
+//	}
 
 	public String getAddressId() {
 		return addressId;

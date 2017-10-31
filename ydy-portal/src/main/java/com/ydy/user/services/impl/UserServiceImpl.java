@@ -20,7 +20,7 @@ public class UserServiceImpl implements IUserService {
 
 	@Autowired
 	private UserJpaDao userDao;
-	@Autowired
+	//@Autowired
 	private AddressJpaDao addressDao;
 
 	@Override
@@ -57,10 +57,10 @@ public class UserServiceImpl implements IUserService {
 		//保存地址
 		Address address = new Address();
 		address.setId(UUID.randomUUID().toString());
-		address.setUser(userDB);
+		//address.setUser(userDB);
 		address.setAddress(user.getAddress());
 		address.setIsDefault(Constants.YES);
-		addressDao.save(address);
+		//addressDao.save(address);
 		
 		//保存上下级关系
 		if(StringUtils.isNotBlank(user.getRecomCode())){

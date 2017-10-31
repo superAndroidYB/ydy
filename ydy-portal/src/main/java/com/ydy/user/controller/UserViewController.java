@@ -26,6 +26,11 @@ public class UserViewController {
 	public String partner(Model model) {
 		return "partner";
 	}
+	
+	@RequestMapping(path = "/boos_partner", method = { RequestMethod.GET, RequestMethod.POST })
+	public String boosPartner(Model model) {
+		return "boss_partner";
+	}
 
 	@RequestMapping(path = "/sale_detail", method = { RequestMethod.GET, RequestMethod.POST })
 	public String saleDetail(Model model) {

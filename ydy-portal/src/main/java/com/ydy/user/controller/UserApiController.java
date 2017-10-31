@@ -10,18 +10,17 @@ import javax.servlet.http.HttpSession;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.taobao.api.ApiException;
 import com.taobao.api.response.AlibabaAliqinFcSmsNumSendResponse;
 import com.ydy.dto.ResponseDto;
 import com.ydy.user.model.User;
 import com.ydy.user.services.IUserService;
 import com.ydy.utils.Constants;
 import com.ydy.utils.ISmsClient;
+import com.ydy.utils.MDFiveUtils;
 
 @RestController
 public class UserApiController {
@@ -74,9 +73,10 @@ public class UserApiController {
 		if(StringUtils.equals(user.getRondomCode(), code)){
 			user.setUserType(Constants.UserType.USER_TYPE_PARTNER.getCode());
 			responseDto = new ResponseDto(true, "注册成功！");
+			user.setPassword(MDFiveUtils.encrypt(user.getPassword()));
 			User userDB = userService.doUserRegister(user);
 			responseDto.setData(userDB);
-			model.addAttribute("user", userDB);
+			model.addAttribute(Constants.USER, userDB);
 		}else{
 			responseDto = new ResponseDto(false, "验证码不正确，请输入短信中收到的验证码");
 		}

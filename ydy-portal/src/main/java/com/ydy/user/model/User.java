@@ -58,11 +58,11 @@ public class User {
 	@JoinColumn(name = "ROOT_USER_ID_")
 	private User rootUser;
 
-	@OneToMany(mappedBy = "user")
-	private Set<Address> addresses;
+	//@OneToMany(mappedBy = "user")
+	//private Set<Address> addresses;
 	
-	@OneToMany(mappedBy = "user")
-	private Set<Order> orders;
+	//@OneToMany(mappedBy = "user")
+	//private Set<Order> orders;
 
 	@Column(name = "CREATE_TIME_")
 	private Date createTime;
@@ -193,21 +193,21 @@ public class User {
 		this.status = status;
 	}
 
-	public Set<Address> getAddresses() {
-		return addresses;
-	}
-
-	public void setAddresses(Set<Address> addresses) {
-		this.addresses = addresses;
-	}
-
-	public Set<Order> getOrders() {
-		return orders;
-	}
-
-	public void setOrders(Set<Order> orders) {
-		this.orders = orders;
-	}
+//	public Set<Address> getAddresses() {
+//		return addresses;
+//	}
+//
+//	public void setAddresses(Set<Address> addresses) {
+//		this.addresses = addresses;
+//	}
+//
+//	public Set<Order> getOrders() {
+//		return orders;
+//	}
+//
+//	public void setOrders(Set<Order> orders) {
+//		this.orders = orders;
+//	}
 	
 
 }

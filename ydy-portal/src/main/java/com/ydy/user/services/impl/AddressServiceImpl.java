@@ -9,7 +9,7 @@ import com.ydy.user.services.IAddressService;
 @Service(IAddressService.BEAN_ID)
 public class AddressServiceImpl implements IAddressService {
 	
-	@Autowired
+	//@Autowired
 	public AddressJpaDao addressDao;
 	
 
