@@ -9,5 +9,9 @@ public interface IOrderService {
 	public static final String BEAN_ID = "order.OrderService";
 	
 	public ResponseDto doStock(Order order, User user);
+	
+	public ResponseDto doConfirmStock(Order order);
+	
+	public ResponseDto doRejectStock(Order order);
 
 }

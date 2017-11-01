@@ -29,5 +29,17 @@ public class OrderApiController {
 		ResponseDto doStock = orderService.doStock(order, (User)session.getAttribute(Constants.USER));
 		return ResponseEntity.ok(doStock);
 	}
-
+	
+	@RequestMapping(path = "/doConfirmStock", method = { RequestMethod.GET, RequestMethod.POST })
+	public ResponseEntity<ResponseDto> doConfirmStock(Order order){
+		ResponseDto doConfirmStock = orderService.doConfirmStock(order);
+		return ResponseEntity.ok(doConfirmStock);
+	}
+	
+	@RequestMapping(path = "/doRejectStock", method = { RequestMethod.GET, RequestMethod.POST })
+	public ResponseEntity<ResponseDto> doRejectStock(Order order){
+		ResponseDto doRejectStock = orderService.doRejectStock(order);
+		return ResponseEntity.ok(doRejectStock);
+	}
+	
 }

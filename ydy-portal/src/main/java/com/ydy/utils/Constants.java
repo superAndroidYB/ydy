@@ -6,6 +6,34 @@ public class Constants {
 
 	public static final String USER = "USER";
 	
+	public enum OrderStatus {
+		ORDER_APPLY("0", "已申请"), ORDER_CONFIRM("1", "已确认"), ORDER_REJECT("2","已拒绝");
+
+		private String code;
+		private String desc;
+
+		OrderStatus(String code, String desc) {
+			this.code = code;
+			this.desc = desc;
+		}
+
+		public String getCode() {
+			return code;
+		}
+
+		public void setCode(String code) {
+			this.code = code;
+		}
+
+		public String getDesc() {
+			return desc;
+		}
+
+		public void setDesc(String desc) {
+			this.desc = desc;
+		}
+	}
+	
 	public enum UserType {
 		USER_TYPE_BOSS("0", "老板"), USER_TYPE_PARTNER("0", "合伙人");
 

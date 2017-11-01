@@ -12,5 +12,11 @@ public class OrderViewController {
 	public String stock(Model model) {
 		return "stock";
 	}
+	
+	
+	@RequestMapping(value = "/confirm_stock", method = { RequestMethod.GET, RequestMethod.POST })
+	public String confirmStock(Model model) {
+		return "confirm_stock";
+	}
 
 }
