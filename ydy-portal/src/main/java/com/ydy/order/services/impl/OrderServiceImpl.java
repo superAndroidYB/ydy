@@ -15,17 +15,16 @@ import com.ydy.user.model.User;
 public class OrderServiceImpl implements IOrderService {
 	
 	
-	//@Autowired
+	@Autowired
 	public OrderJpaDao orderDao;
 	
 
 	@Override
 	public ResponseDto doStock(Order order, User user) {
 		order.setId(UUID.randomUUID().toString());
-		//order.setUser(user);
-		//Order save = orderDao.save(order);
-		//return new ResponseDto(true, "成功", save);
-		return null;
+		order.setUser(user);
+		Order save = orderDao.save(order);
+		return new ResponseDto(true, "成功", save);
 	}
 
 }

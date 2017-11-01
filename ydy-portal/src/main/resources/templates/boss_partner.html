@@ -8,32 +8,54 @@
 	content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
-<link rel="stylesheet" href="//cdn.bootcss.com/weui/1.1.1/style/weui.min.css">
-<link rel="stylesheet" href="//cdn.bootcss.com/jquery-weui/1.0.1/css/jquery-weui.min.css">
-<script src="//cdn.bootcss.com/jquery/1.11.0/jquery.min.js"></script>
-<script src="//cdn.bootcss.com/jquery-weui/1.0.1/js/jquery-weui.min.js"></script>
+<link rel="stylesheet" href="css/mui.min.css">
+<script type="text/javascript" src="js/mui.min.js"></script>
+<script src="js/jquery-3.2.1.min.js"></script>
+<script src="js/ydy.js"></script>
+<link
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+	rel="stylesheet">
 </head>
 <body>
-	<div class="weui-tab">
-	  <div class="weui-navbar">
-	    <a class="weui-navbar__item weui-bar__item--on" href="#tab1">
-	      选项一
-	    </a>
-	    <a class="weui-navbar__item" href="#tab2">
-	      选项二
-	    </a>
-	    <a class="weui-navbar__item" href="#tab2">
-	      选项三
-	    </a>
-	  </div>
-	  <div class="weui-tab__bd">
-	    <div id="tab1" class="weui-tab__bd-item weui-tab__bd-item--active">
-	      <h1>页面一</h1>
+	<div class="mui-content">
+		<div style="background-color: #eae9e9;">
+			<p style="padding: 10px;margin-bottom: 0px;"><span class="mui-icon mui-icon-personadd"></span>待确认的合伙人</p>
+		</div>
+		<ul class="mui-table-view" th:if="${#lists.size(unUserList)} gt 0">
+		    <li class="mui-table-view-cell mui-media" th:each="user : ${unUserList}">
+		        <a th:href="@{/confirm(id=${user.id})}" href="javascript:;" class="mui-navigate-right">
+		            <img class="mui-media-object mui-pull-left" src="images/shuijiao.jpg">
+		            <div class="mui-media-body" >
+		               <span th:text="${user.userName}">张三</span>
+		                <p class='mui-ellipsis' th:text="${user.userMobile}">广东 深圳</p>
+		            </div>
+		        </a>
+		    </li>
+		</ul>
+		<div style="background-color: #ffffff; text-align: center;" th:unless="${#lists.size(unUserList)} gt 0">
+	    	<p>暂无数据！</p>
 	    </div>
-	    <div id="tab2" class="weui-tab__bd-item">
-	      <h1>页面二</h1>
+		
+		<div style="background-color: #eae9e9;">
+			<p style="padding: 10px;margin-bottom: 0px;"><span class="mui-icon mui-icon-person"></span>全部合伙人</p>
+		</div>
+		
+		<div class="mui-input-row mui-search" th:if="${#lists.size(allUserList)} gt 0">
+		    <input type="search" class="mui-input-clear" placeholder="输入客户姓名或电话进行搜索">
+		</div>
+		<div class="mui-row" style="background-color: #ffffff; padding-left : 20px; padding-right : 20px;" th:if="${#lists.size(allUserList)} gt 0">
+	        <div class="mui-col-xs-3" th:each="user : ${allUserList}">
+	            <div style="text-align: center;">
+	            	<a th:href="@{/confirm(id=${user.id})}">
+	            		<img src="images/muwu.jpg" width="50px" height="50px" style="margin-top: 10px;" class="img-circle">
+	            		<p th:text="${user.userName}">张三</p>
+	            	</a>
+	            </div>
+	        </div>
 	    </div>
-	  </div>
+	    <div style="background-color: #ffffff; text-align: center;" th:unless="${#lists.size(allUserList)} gt 0">
+	    	<p>暂无数据！</p>
+	    </div>
 	</div>
 </body>
 </html>

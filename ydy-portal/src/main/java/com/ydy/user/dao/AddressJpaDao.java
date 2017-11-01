@@ -4,7 +4,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.ydy.user.model.Address;
 
-public interface AddressJpaDao {//extends JpaRepository<Address, String>{
+public interface AddressJpaDao extends JpaRepository<Address, String>{
 	
 
 	

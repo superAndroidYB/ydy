@@ -1,6 +1,6 @@
 package com.ydy.user.services.impl;
 
-import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 import org.apache.commons.lang3.StringUtils;
@@ -20,7 +20,7 @@ public class UserServiceImpl implements IUserService {
 
 	@Autowired
 	private UserJpaDao userDao;
-	//@Autowired
+	@Autowired
 	private AddressJpaDao addressDao;
 
 	@Override
@@ -57,10 +57,10 @@ public class UserServiceImpl implements IUserService {
 		//保存地址
 		Address address = new Address();
 		address.setId(UUID.randomUUID().toString());
-		//address.setUser(userDB);
+		address.setUser(userDB);
 		address.setAddress(user.getAddress());
 		address.setIsDefault(Constants.YES);
-		//addressDao.save(address);
+		addressDao.save(address);
 		
 		//保存上下级关系
 		if(StringUtils.isNotBlank(user.getRecomCode())){
@@ -99,6 +99,18 @@ public class UserServiceImpl implements IUserService {
 			}
 		}
 		return null;
+	}
+
+	@Override
+	public List<User> getAllUndeterminedUser() {
+		return userDao.findByUserTypeAndStatusAndDeleteFlag(Constants.UserType.USER_TYPE_PARTNER.getCode()
+				,Constants.UserStatus.USER_STATUS_REGISTER.getCode(),Constants.NO);
+	}
+
+	@Override
+	public List<User> getValidUserList() {
+		return userDao.findByUserTypeAndStatusAndDeleteFlag(Constants.UserType.USER_TYPE_PARTNER.getCode()
+				,Constants.UserStatus.USER_STATUS_VALID.getCode(),Constants.NO);
 	}
 
 }

@@ -26,9 +26,11 @@ public class UserViewController {
 	public String partner(Model model) {
 		return "partner";
 	}
-	
-	@RequestMapping(path = "/boos_partner", method = { RequestMethod.GET, RequestMethod.POST })
-	public String boosPartner(Model model) {
+
+	@RequestMapping(path = "/boss_partner", method = { RequestMethod.GET, RequestMethod.POST })
+	public String bossPartner(Model model) {
+		model.addAttribute("unUserList", userService.getAllUndeterminedUser());
+		model.addAttribute("allUserList", userService.getAllUndeterminedUser());
 		return "boss_partner";
 	}
 
@@ -38,7 +40,8 @@ public class UserViewController {
 	}
 
 	@RequestMapping(path = "/confirm", method = { RequestMethod.GET, RequestMethod.POST })
-	public String confirm(Model model) {
+	public String confirm(String id, Model model) {
+		model.addAttribute("user", userService.findUserById(id));
 		return "confirm";
 	}
 
@@ -59,9 +62,8 @@ public class UserViewController {
 		return "register";
 	}
 
-
 	@RequestMapping(value = "/user_center", method = { RequestMethod.GET, RequestMethod.POST })
-	public String userCenter(Model model,HttpSession session) {
+	public String userCenter(Model model, HttpSession session) {
 		//User user = (User) session.getAttribute(Constants.USER);
 		User user = new User();
 		user.setRecomCode("34504503");
@@ -88,9 +90,17 @@ public class UserViewController {
 	public String dividendDetail(Model model) {
 		return "dividend_detail";
 	}
-	
+
 	@RequestMapping(value = "/wait", method = { RequestMethod.GET, RequestMethod.POST })
-	public String wait(Model model){
+	public String wait(Model model) {
+		model.addAttribute("tip", "注册成功！");
 		return "wait";
 	}
+
+	@RequestMapping(value = "/stockWait", method = { RequestMethod.GET, RequestMethod.POST })
+	public String stockWait(Model model) {
+		model.addAttribute("tip", "申请进货成功！");
+		return "wait";
+	}
+
 }

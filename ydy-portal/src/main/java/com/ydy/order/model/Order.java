@@ -9,39 +9,30 @@ import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
-import com.ydy.user.model.Address;
 import com.ydy.user.model.User;
 
-//@Entity
-//@Table(name = "YDY_ORDER")
+@Entity
+@Table(name = "YDY_ORDER")
 public class Order {
 
 	@Id
 	@Column(name = "ID_", length = 50)
 	private String id;
 
-//	@ManyToOne(fetch = FetchType.LAZY)
-//	@JoinColumn(name = "USER_ID_")
-//	private User user;
-//	
-//	@OneToOne(fetch = FetchType.LAZY)
-//	@JoinColumn(name = "ADDRESS_ID_")
-//	private Address address;
-	
-	@Transient
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "USER_ID_")
+	private User user;
+
+	@Column(name = "ADDRESS_ID_", length = 50)
 	private String addressId;
-	@Transient
+
+	@Column(name = "ADDRESS_", length = 500)
 	private String addressStr;
 
 	@Column(name = "APPLY_NUM_", length = 18, scale = 2)
 	private BigDecimal applyNum;
-
-	@Column(name = "APPLY_UNIT_", length = 10)
-	private String applyUnit;
 
 	@Column(name = "APPLY_UNIT_PRIC_", length = 18, scale = 2)
 	private BigDecimal applyUnitPric;
@@ -54,9 +45,6 @@ public class Order {
 
 	@Column(name = "AGREE_NUM_", length = 18, scale = 2)
 	private BigDecimal agreelyNum;
-
-	@Column(name = "AGREE_UNIT_", length = 10)
-	private String agreeyUnit;
 
 	@Column(name = "AGREE_UNIT_PRIC_", length = 18, scale = 2)
 	private BigDecimal agreeUnitPric;
@@ -83,14 +71,6 @@ public class Order {
 	public void setId(String id) {
 		this.id = id;
 	}
-//
-//	public User getUser() {
-//		return user;
-//	}
-//
-//	public void setUser(User user) {
-//		this.user = user;
-//	}
 
 	public BigDecimal getApplyNum() {
 		return applyNum;
@@ -98,14 +78,6 @@ public class Order {
 
 	public void setApplyNum(BigDecimal applyNum) {
 		this.applyNum = applyNum;
-	}
-
-	public String getApplyUnit() {
-		return applyUnit;
-	}
-
-	public void setApplyUnit(String applyUnit) {
-		this.applyUnit = applyUnit;
 	}
 
 	public BigDecimal getApplyUnitPric() {
@@ -138,14 +110,6 @@ public class Order {
 
 	public void setAgreelyNum(BigDecimal agreelyNum) {
 		this.agreelyNum = agreelyNum;
-	}
-
-	public String getAgreeyUnit() {
-		return agreeyUnit;
-	}
-
-	public void setAgreeyUnit(String agreeyUnit) {
-		this.agreeyUnit = agreeyUnit;
 	}
 
 	public BigDecimal getAgreeUnitPric() {
@@ -196,14 +160,6 @@ public class Order {
 		this.agreeTime = agreeTime;
 	}
 
-//	public Address getAddress() {
-//		return address;
-//	}
-//
-//	public void setAddress(Address address) {
-//		this.address = address;
-//	}
-
 	public String getAddressId() {
 		return addressId;
 	}
@@ -219,5 +175,13 @@ public class Order {
 	public void setAddressStr(String addressStr) {
 		this.addressStr = addressStr;
 	}
-	
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
 }

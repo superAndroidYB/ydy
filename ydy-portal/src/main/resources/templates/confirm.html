@@ -8,12 +8,23 @@
 	content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
-<link rel="stylesheet" href="css/mui.min.css">
-<script type="text/javascript" src="js/mui.min.js"></script>
-<script src="js/jquery-3.2.1.min.js"></script>
-<script src="js/ydy.js"></script>
+<link rel="stylesheet" href="//cdn.bootcss.com/weui/1.1.1/style/weui.min.css">
+<link rel="stylesheet" href="//cdn.bootcss.com/jquery-weui/1.0.1/css/jquery-weui.min.css">
+<link rel="stylesheet" href="http://res.wx.qq.com/open/libs/weui/0.4.0/weui.min.css">
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-
+	<div style="text-align: center;">
+		<img src="images/muwu.jpg" width="100px" height="100px" style="margin-top: 10px;" class="img-circle">
+		<h4 th:text="${user.userName}">喻彬</h4>
+		<p th:text="${user.userMobile}">123231</p>
+		<div style="margin: 10px">
+			<a href="javascript:;" class="weui-btn weui-btn_primary" th:text='确定【 +${user.userName} +】成为合伙人'>确定</a>
+			<a href="javascript:;" class="weui-btn weui-btn_primary">不同意</a>
+		</div>
+	</div>
+	<div class="weui_extra_area">
+		<a href="javascript:void(0)">@御鼎园</a>
+	</div>
 </body>
 </html>

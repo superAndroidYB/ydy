@@ -1,5 +1,7 @@
 package com.ydy.user.services;
 
+import java.util.List;
+
 import com.ydy.dto.ResponseDto;
 import com.ydy.user.model.User;
 
@@ -15,5 +17,13 @@ public interface IUserService {
 	public ResponseDto doRegisterInfo(User user);
 	
 	public ResponseDto doVerifRecomCode(User user);
+	
+	/**
+	 * 获取所有未确认合伙人
+	 * @return
+	 */
+	public List<User> getAllUndeterminedUser();
+	
+	public List<User> getValidUserList();
 
 }

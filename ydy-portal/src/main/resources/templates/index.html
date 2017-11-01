@@ -9,7 +9,6 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
 <link rel="stylesheet" href="css/mui.min.css">
-<link rel="stylesheet" href="css/iconfont.css">
 <link
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
 	rel="stylesheet">
@@ -65,6 +64,10 @@
 	top: 230px;
 	width: 100%;
 }
+
+.hit {
+	 background-color: #eae9e9;
+}
 </style>
 </head>
 <body>
@@ -81,7 +84,7 @@
 	<div class="mui-content">
 		<div class="mui-row">
 	        <div class="mui-col-sm-6 mui-col-xs-12">
-	            <div class="mui-card">
+	            <div class="mui-card" id="dingdanzhongxin">
 					<!--页眉，放置标题-->
 					<div class="mui-card-header mui-card-media">
 						<img src="images/dingdanzhongxin.png" />
@@ -93,20 +96,20 @@
 				</div>
 	        </div>
 	        <div class="mui-col-sm-6 mui-col-xs-12">
-				<div class="mui-card">
+				<div class="mui-card" id="hehuoren">
 					<!--页眉，放置标题-->
 					<div class="mui-card-header mui-card-media">
 						<img src="images/hehuorenzhongxin.png" />
 						<div class="mui-media-body">
 							合伙人中心
-							<p>点击查看</p>
+							<p>1个申请未处理</p>
 						</div>
 					</div>
 				</div>
 	        </div>
 	    </div>
 	    
-	    <div class="mui-card">
+	    <div class="mui-card" id="xiaoshouzonglan">
 			<!--页眉，放置标题-->
 			<div class="mui-card-header mui-card-media">
 				<img src="images/xiaoshoujixiao.png" />
@@ -132,7 +135,7 @@
 			<div class="mui-card-footer">点击查看详情</div>
 		</div>
 		
-		 <div class="mui-card">
+		 <div class="mui-card" id="tuozhanzonglan">
 			<!--页眉，放置标题-->
 			<div class="mui-card-header mui-card-media">
 				<img src="images/tuozhanjixiao.png" />
@@ -151,7 +154,7 @@
 			<div class="mui-card-footer">点击查看详情</div>
 		</div>
 		
-		 <div class="mui-card">
+		 <div class="mui-card" id="fenhongzonglan">
 			<!--页眉，放置标题-->
 			<div class="mui-card-header mui-card-media">
 				<img src="images/fenhong.png" />
@@ -169,7 +172,57 @@
 			<!--页脚，放置补充信息或支持的操作-->
 			<div class="mui-card-footer">点击查看详情</div>
 		</div>
+		
+		<div style="text-align: center;">
+			<a href="javascript:void(0)">@御鼎园</a>
+		</div>
 	</div>
-
+	
+	<script type="text/javascript">
+		$("#dingdanzhongxin").on("click",function(){
+			$("#dingdanzhongxin").addClass("hit");
+			setTimeout(function(){
+				$("#dingdanzhongxin").removeClass("hit");
+			},200);
+		});
+		
+		$("#hehuoren").on("click",function(){
+			$("#hehuoren").addClass("hit");
+			setTimeout(function(){
+				$("#hehuoren").removeClass("hit");
+			},200);
+			window.location.href="boss_partner";
+		});
+		
+		$("#xiaoshouzonglan").on("click",function(){
+			$("#xiaoshouzonglan").addClass("hit");
+			setTimeout(function(){
+				$("#xiaoshouzonglan").removeClass("hit");
+			},200);
+		});
+		
+		$("#tuozhanzonglan").on("click",function(){
+			$("#tuozhanzonglan").addClass("hit");
+			setTimeout(function(){
+				$("#tuozhanzonglan").removeClass("hit");
+			},200);
+		});
+		
+		$("#dingdanzhongxin").on("click",function(){
+			$("#dingdanzhongxin").addClass("hit");
+			setTimeout(function(){
+				$("#dingdanzhongxin").removeClass("hit");
+			},200);
+		});
+		
+		$("#fenhongzonglan").on("click",function(){
+			$("#fenhongzonglan").addClass("hit");
+			setTimeout(function(){
+				$("#fenhongzonglan").removeClass("hit");
+			},200);
+		});
+	</script>
 </body>
+
+
 </html>

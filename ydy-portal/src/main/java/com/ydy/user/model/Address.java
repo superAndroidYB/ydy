@@ -1,6 +1,5 @@
 package com.ydy.user.model;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -9,17 +8,17 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-//@Entity
-//@Table(name="ydy_address")
+@Entity
+@Table(name="ydy_address")
 public class Address {
 	
 	@Id
 	@Column(name = "ID_", length = 50)
 	private String id;
 
-//	@ManyToOne(fetch=FetchType.LAZY)
-//	@JoinColumn(name = "USER_ID_")
-//	private User user;
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name = "USER_ID_")
+	private User user;
 	
 	@Column(name = "ADDRESS_", length = 4000)
 	private String address;
@@ -35,13 +34,13 @@ public class Address {
 		this.id = id;
 	}
 
-//	public User getUser() {
-//		return user;
-//	}
-//
-//	public void setUser(User user) {
-//		this.user = user;
-//	}
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
 
 	public String getAddress() {
 		return address;
