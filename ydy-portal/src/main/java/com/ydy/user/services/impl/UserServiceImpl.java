@@ -1,14 +1,20 @@
 package com.ydy.user.services.impl;
 
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.time.DateFormatUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ydy.dto.IndexDto;
 import com.ydy.dto.ResponseDto;
 import com.ydy.user.dao.AddressJpaDao;
+import com.ydy.user.dao.OrderJpaDao;
 import com.ydy.user.dao.UserJpaDao;
 import com.ydy.user.model.Address;
 import com.ydy.user.model.User;
@@ -22,6 +28,8 @@ public class UserServiceImpl implements IUserService {
 	private UserJpaDao userDao;
 	@Autowired
 	private AddressJpaDao addressDao;
+	@Autowired
+	private OrderJpaDao orderDao;
 
 	@Override
 	public boolean checkMobileExtis(String mobile) {
@@ -111,6 +119,28 @@ public class UserServiceImpl implements IUserService {
 	public List<User> getValidUserList() {
 		return userDao.findByUserTypeAndStatusAndDeleteFlag(Constants.UserType.USER_TYPE_PARTNER.getCode()
 				,Constants.UserStatus.USER_STATUS_VALID.getCode(),Constants.NO);
+	}
+
+	@Override
+	public IndexDto getIndexData() {
+		IndexDto result = new IndexDto();
+		int countByStatus = orderDao.countByStatus(Constants.OrderStatus.ORDER_APPLY.getCode());
+		result.setOrderMsg(countByStatus > 0 ? String.format("%s个申请待处理", countByStatus) : "点击查看详情");
+		List<User> findByUserTypeAndStatusAndDeleteFlag = userDao.findByUserTypeAndStatusAndDeleteFlag(Constants.UserType.USER_TYPE_PARTNER.getCode()
+				, Constants.UserStatus.USER_STATUS_REGISTER.getCode(),Constants.NO);
+		result.setPartnerMsg(findByUserTypeAndStatusAndDeleteFlag.size() > 0 ? String.format("%s个申请待处理", findByUserTypeAndStatusAndDeleteFlag.size()) : "点击查看详情");
+		result.setMonth(DateFormatUtils.format(new Date(), "yyyy年MM月dd日"));
+		result.setGetTime(DateFormatUtils.format(new Date(), "yyyy年MM月dd日 hh:mm:ss"));
+		BigDecimal sumAgreeNumByStatus = orderDao.sumAgreeNumByStatus(Constants.OrderStatus.ORDER_CONFIRM.getCode(),DateFormatUtils.format(new Date(), "yyyy-MM-dd")+"%");
+		result.setShippingQty(new DecimalFormat(",###").format(sumAgreeNumByStatus));
+		BigDecimal sumAgreeAmtByStatus = orderDao.sumAgreeAmtByStatus(Constants.OrderStatus.ORDER_CONFIRM.getCode(),DateFormatUtils.format(new Date(), "yyyy-MM-dd")+"%");
+		result.setSaleAmt(new DecimalFormat(",###").format(sumAgreeAmtByStatus));
+		int countPartnerByMonth = userDao.getCountPartnerByMonth(Constants.UserType.USER_TYPE_PARTNER.getCode()
+				, Constants.UserStatus.USER_STATUS_VALID.getCode()
+				, DateFormatUtils.format(new Date(), "yyyy-MM-dd")+"%", Constants.NO);
+		result.setAddPartnerNum(Integer.toString(countPartnerByMonth));
+		//TODO
+		return result;
 	}
 
 }

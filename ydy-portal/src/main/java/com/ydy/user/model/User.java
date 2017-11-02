@@ -1,21 +1,15 @@
 package com.ydy.user.model;
 
 import java.util.Date;
-import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-
-import com.ydy.order.model.Order;
 
 @Entity
 @Table(name = "ydy_user")
@@ -57,12 +51,6 @@ public class User {
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "ROOT_USER_ID_")
 	private User rootUser;
-
-	//@OneToMany(mappedBy = "user")
-	//private Set<Address> addresses;
-	
-	//@OneToMany(mappedBy = "user")
-	//private Set<Order> orders;
 
 	@Column(name = "CREATE_TIME_")
 	private Date createTime;

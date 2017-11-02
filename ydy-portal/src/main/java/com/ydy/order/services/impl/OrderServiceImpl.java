@@ -1,6 +1,7 @@
 package com.ydy.order.services.impl;
 
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 import org.apache.commons.lang3.StringUtils;
@@ -36,11 +37,11 @@ public class OrderServiceImpl implements IOrderService {
 	public ResponseDto doConfirmStock(Order order) {
 		if(StringUtils.isNotBlank(order.getId())){
 			Order orderDB = orderDao.getOne(order.getId());
-			orderDB.setAgreelyNum(order.getAgreelyNum());
+			orderDB.setAgreeNum(order.getAgreeNum());
 			orderDB.setAgreeMemo(order.getAgreeMemo());
 			orderDB.setAgreeTime(new Date());
 			orderDB.setAgreeUnitPric(order.getAgreeUnitPric());
-			orderDB.setAgreeAmt(order.getAgreelyNum().multiply(order.getAgreeUnitPric()));
+			orderDB.setAgreeAmt(order.getAgreeNum().multiply(order.getAgreeUnitPric()));
 			order.setStatus(Constants.OrderStatus.ORDER_CONFIRM.getCode());
 			Order save = orderDao.save(orderDB);
 			return new ResponseDto(true, "成功", save);
@@ -53,7 +54,7 @@ public class OrderServiceImpl implements IOrderService {
 	public ResponseDto doRejectStock(Order order) {
 		if(StringUtils.isNotBlank(order.getId())){
 			Order orderDB = orderDao.getOne(order.getId());
-			orderDB.setAgreelyNum(order.getAgreelyNum());
+			orderDB.setAgreeNum(order.getAgreeNum());
 			orderDB.setAgreeMemo(order.getAgreeMemo());
 			orderDB.setAgreeTime(new Date());
 			orderDB.setAgreeUnitPric(order.getAgreeUnitPric());
@@ -63,6 +64,18 @@ public class OrderServiceImpl implements IOrderService {
 			return new ResponseDto(true, "成功", save);
 		}
 		return new ResponseDto(false, "参数缺失！");
+	}
+
+
+	@Override
+	public List<Order> getAllOrder() {
+		return orderDao.findAll();
+	}
+
+
+	@Override
+	public List<Order> getOrderListByStatus(String status,User user) {
+		return orderDao.findByStatusAndUserId(status, user.getId());
 	}
 
 }

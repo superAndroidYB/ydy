@@ -2,6 +2,7 @@ package com.ydy.user.services;
 
 import java.util.List;
 
+import com.ydy.dto.IndexDto;
 import com.ydy.dto.ResponseDto;
 import com.ydy.user.model.User;
 
@@ -25,5 +26,8 @@ public interface IUserService {
 	public List<User> getAllUndeterminedUser();
 	
 	public List<User> getValidUserList();
+	
+	public IndexDto getIndexData();
+	
 
 }

@@ -19,6 +19,7 @@ public class UserViewController {
 
 	@RequestMapping(path = "/index", method = { RequestMethod.GET, RequestMethod.POST })
 	public String index(Model model) {
+		model.addAttribute("indexDto", userService.getIndexData());
 		return "index";
 	}
 
@@ -76,11 +77,6 @@ public class UserViewController {
 		return "user_center";
 	}
 
-	@RequestMapping(value = "/order", method = { RequestMethod.GET, RequestMethod.POST })
-	public String order(Model model) {
-		return "order";
-	}
-
 	@RequestMapping(value = "/dividend", method = { RequestMethod.GET, RequestMethod.POST })
 	public String dividend(Model model) {
 		return "dividend";
@@ -97,10 +93,5 @@ public class UserViewController {
 		return "wait";
 	}
 
-	@RequestMapping(value = "/stockWait", method = { RequestMethod.GET, RequestMethod.POST })
-	public String stockWait(Model model) {
-		model.addAttribute("tip", "申请进货成功！");
-		return "wait";
-	}
 
 }
