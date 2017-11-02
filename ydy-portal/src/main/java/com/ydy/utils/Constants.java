@@ -6,6 +6,10 @@ public class Constants {
 
 	public static final String USER = "USER";
 	
+	public static final String VIS_BONUS = "同级奖";
+	public static final String SERVER_BONUS = "服务奖";
+	public static final String SALE_BONUS = "月度销售奖";
+	
 	public enum OrderStatus {
 		ORDER_APPLY("0", "已申请"), ORDER_CONFIRM("1", "已确认"), ORDER_REJECT("2","已拒绝");
 

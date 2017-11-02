@@ -44,7 +44,7 @@ public class Order {
 	private String applyMemo;
 
 	@Column(name = "AGREE_NUM_", length = 18, scale = 2)
-	private BigDecimal agreelyNum;
+	private BigDecimal agreeNum;
 
 	@Column(name = "AGREE_UNIT_PRIC_", length = 18, scale = 2)
 	private BigDecimal agreeUnitPric;
@@ -63,6 +63,9 @@ public class Order {
 
 	@Column(name = "AGREE_TIME_")
 	private Date agreeTime;
+	
+	@Column(name = "FIRST_FLAG_")
+	private Date firstFlag;
 
 	public String getId() {
 		return id;
@@ -104,12 +107,12 @@ public class Order {
 		this.applyMemo = applyMemo;
 	}
 
-	public BigDecimal getAgreelyNum() {
-		return agreelyNum;
+	public BigDecimal getAgreeNum() {
+		return agreeNum;
 	}
 
-	public void setAgreelyNum(BigDecimal agreelyNum) {
-		this.agreelyNum = agreelyNum;
+	public void setAgreeNum(BigDecimal agreeNum) {
+		this.agreeNum = agreeNum;
 	}
 
 	public BigDecimal getAgreeUnitPric() {
@@ -182,6 +185,14 @@ public class Order {
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+	public Date getFirstFlag() {
+		return firstFlag;
+	}
+
+	public void setFirstFlag(Date firstFlag) {
+		this.firstFlag = firstFlag;
 	}
 
 }

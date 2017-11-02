@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.ydy.user.model.User;
 import com.ydy.user.services.IUserService;
+import com.ydy.utils.Constants;
 
 @Controller
 public class UserViewController {
@@ -19,18 +20,22 @@ public class UserViewController {
 
 	@RequestMapping(path = "/index", method = { RequestMethod.GET, RequestMethod.POST })
 	public String index(Model model) {
+		model.addAttribute("indexDto", userService.getIndexData());
 		return "index";
 	}
 
 	@RequestMapping(path = "/partner", method = { RequestMethod.GET, RequestMethod.POST })
-	public String partner(Model model) {
+	public String partner(Model model, HttpSession session) {
+		User user = (User) session.getAttribute(Constants.USER);
+		model.addAttribute("title", "我推荐的人");
+		model.addAttribute("userList", userService.getNextUserList(user));
 		return "partner";
 	}
 
 	@RequestMapping(path = "/boss_partner", method = { RequestMethod.GET, RequestMethod.POST })
 	public String bossPartner(Model model) {
 		model.addAttribute("unUserList", userService.getAllUndeterminedUser());
-		model.addAttribute("allUserList", userService.getAllUndeterminedUser());
+		model.addAttribute("allUserList", userService.getValidUserList());
 		return "boss_partner";
 	}
 
@@ -65,20 +70,10 @@ public class UserViewController {
 	@RequestMapping(value = "/user_center", method = { RequestMethod.GET, RequestMethod.POST })
 	public String userCenter(Model model, HttpSession session) {
 		//User user = (User) session.getAttribute(Constants.USER);
-		User user = new User();
-		user.setRecomCode("34504503");
-		user.setUserName("Jeck");
-		User referrerUser = new User();
-		referrerUser.setRecomCode("34504503");
-		referrerUser.setUserName("Rose");
-		user.setReferrerUser(referrerUser);
+		User user = userService.getAllUndeterminedUser().iterator().next();
+		user.setNextNum(userService.getNextUserNum(user));
 		model.addAttribute("user", user);
 		return "user_center";
-	}
-
-	@RequestMapping(value = "/order", method = { RequestMethod.GET, RequestMethod.POST })
-	public String order(Model model) {
-		return "order";
 	}
 
 	@RequestMapping(value = "/dividend", method = { RequestMethod.GET, RequestMethod.POST })
@@ -97,10 +92,5 @@ public class UserViewController {
 		return "wait";
 	}
 
-	@RequestMapping(value = "/stockWait", method = { RequestMethod.GET, RequestMethod.POST })
-	public String stockWait(Model model) {
-		model.addAttribute("tip", "申请进货成功！");
-		return "wait";
-	}
 
 }

@@ -1,21 +1,15 @@
 package com.ydy.user.model;
 
 import java.util.Date;
-import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-
-import com.ydy.order.model.Order;
 
 @Entity
 @Table(name = "ydy_user")
@@ -58,12 +52,6 @@ public class User {
 	@JoinColumn(name = "ROOT_USER_ID_")
 	private User rootUser;
 
-	//@OneToMany(mappedBy = "user")
-	//private Set<Address> addresses;
-	
-	//@OneToMany(mappedBy = "user")
-	//private Set<Order> orders;
-
 	@Column(name = "CREATE_TIME_")
 	private Date createTime;
 
@@ -73,6 +61,9 @@ public class User {
 	@Column(name = "DELETE_FLAG_", length = 1)
 	private String deleteFlag;
 
+	@Transient
+	private int nextNum;
+	
 	public String getId() {
 		return id;
 	}
@@ -193,21 +184,11 @@ public class User {
 		this.status = status;
 	}
 
-//	public Set<Address> getAddresses() {
-//		return addresses;
-//	}
-//
-//	public void setAddresses(Set<Address> addresses) {
-//		this.addresses = addresses;
-//	}
-//
-//	public Set<Order> getOrders() {
-//		return orders;
-//	}
-//
-//	public void setOrders(Set<Order> orders) {
-//		this.orders = orders;
-//	}
-	
+	public int getNextNum() {
+		return nextNum;
+	}
 
+	public void setNextNum(int nextNum) {
+		this.nextNum = nextNum;
+	}
 }
