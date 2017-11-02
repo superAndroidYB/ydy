@@ -29,6 +29,7 @@ public interface IUserService {
 	
 	public IndexDto getIndexData();
 	
+	
 	/**
 	 * 获取我的下级
 	 * @param user
