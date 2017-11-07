@@ -73,7 +73,7 @@
 			<h4>
 				<strong th:text="${user.userName}">张三</strong>
 			</h4>
-			<h4 th:unless="${user.referrerUser eq null}" th:text="${user.referrerUser.userName}">推荐人：李四</h4>
+			<h4 th:unless="${user.referrerUser eq null}" th:text="推荐人：+${user.referrerUser.userName}">推荐人：李四</h4>
 		</div>
 		<div class="mui-content card">
 			<div class="mui-card">

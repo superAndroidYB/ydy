@@ -20,7 +20,7 @@ public class UserViewController {
 
 	@RequestMapping(path = "/index", method = { RequestMethod.GET, RequestMethod.POST })
 	public String index(Model model) {
-		model.addAttribute("indexDto", userService.getIndexData());
+		//model.addAttribute("indexDto", userService.getIndexData());
 		return "index";
 	}
 

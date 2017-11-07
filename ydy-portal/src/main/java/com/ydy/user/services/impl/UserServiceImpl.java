@@ -59,7 +59,7 @@ public class UserServiceImpl implements IUserService {
 		
 		User userDB = userDao.findOne(user.getId());
 		userDB.setUserName(user.getUserName());
-		userDB.setRecomCode(user.getRecomCode());
+		userDB.setRecomCode("");
 		userDB.setStatus(Constants.UserStatus.USER_STATUS_REGISTER.getCode());
 		
 		//保存地址
@@ -102,9 +102,10 @@ public class UserServiceImpl implements IUserService {
 			User userDB = userDao.findByRecomCodeAndDeleteFlag(user.getRecomCode(), Constants.NO);
 			if(userDB == null){
 				return new ResponseDto(false, "您填写的推荐码系统中不存在，请确认是否输入正确，如没有推荐人，请不要填写！");
-			}else{
-				return new ResponseDto(true, String.format("推荐人为%s，请确认无误后继续！", userDB.getUserName()));
 			}
+			//else{
+				//return new ResponseDto(true, String.format("推荐人为%s，请确认无误后继续！", userDB.getUserName()));
+			//}
 		}
 		return null;
 	}
