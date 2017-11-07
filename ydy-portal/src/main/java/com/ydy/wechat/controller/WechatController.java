@@ -6,8 +6,12 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.soecode.wxtools.api.IService;
@@ -16,6 +20,11 @@ import com.soecode.wxtools.api.WxService;
 @RestController
 public class WechatController {
 
+	private IService iService = new WxService();
+	
+	@Autowired    
+	private HttpSession session; 
+	
 	/**
 	 * 微信处理接口
 	 * @author yubin
@@ -23,6 +32,7 @@ public class WechatController {
 	 * @return
 	 * @throws IOException
 	 */
+	@RequestMapping(path = "/wechatProcess", method = { RequestMethod.GET, RequestMethod.POST })
 	public String wechatProcess(HttpServletRequest request) throws IOException{
 		request.setCharacterEncoding("UTF-8");  
 		
