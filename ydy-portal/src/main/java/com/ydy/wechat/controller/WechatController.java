@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -15,7 +17,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.soecode.wxtools.api.IService;
+import com.soecode.wxtools.api.WxConsts;
 import com.soecode.wxtools.api.WxService;
+import com.soecode.wxtools.bean.WxMenu;
+import com.soecode.wxtools.bean.WxMenu.WxMenuButton;
+import com.soecode.wxtools.exception.WxErrorException;
 
 @RestController
 public class WechatController {
@@ -68,6 +74,23 @@ public class WechatController {
             //result = WechatUtils.parseXmlToEntity(xml);  
         }  
         return result;
+	}
+	
+	@RequestMapping(path = "/createMenu", method = { RequestMethod.GET, RequestMethod.POST })
+	public String createMenu() throws WxErrorException{
+		boolean condition = false;
+		WxMenu menu = new WxMenu();
+		List<WxMenuButton> button = new ArrayList<>();
+		WxMenuButton btn1 = new WxMenuButton();
+		btn1.setKey("index");
+		btn1.setName("御鼎园");
+		btn1.setType(WxConsts.BUTTON_VIEW);
+		btn1.setUrl("http://www.mydy520.com/");
+		button.add(btn1);
+		
+		menu.setButton(button);
+		iService.createMenu(menu, condition);
+		return "success";
 	}
 	
 }
