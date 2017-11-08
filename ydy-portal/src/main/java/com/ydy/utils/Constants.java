@@ -10,6 +10,9 @@ public class Constants {
 	public static final String SERVER_BONUS = "服务奖";
 	public static final String SALE_BONUS = "月度销售奖";
 	
+	
+	public static final String CREATE_TAG_URL = "https://api.weixin.qq.com/cgi-bin/tags/get?access_token=ACCESS_TOKEN";
+	
 	public enum OrderStatus {
 		ORDER_APPLY("0", "已申请"), ORDER_CONFIRM("1", "已确认"), ORDER_REJECT("2","已拒绝");
 

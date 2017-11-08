@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang3.StringUtils;
+import org.codehaus.jackson.JsonGenerationException;
+import org.codehaus.jackson.map.JsonMappingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -22,6 +24,8 @@ import com.soecode.wxtools.api.WxService;
 import com.soecode.wxtools.bean.WxMenu;
 import com.soecode.wxtools.bean.WxMenu.WxMenuButton;
 import com.soecode.wxtools.exception.WxErrorException;
+import com.ydy.utils.Constants;
+import com.ydy.wechat.model.UserTag;
 
 @RestController
 public class WechatController {
@@ -90,6 +94,13 @@ public class WechatController {
 		
 		menu.setButton(button);
 		iService.createMenu(menu, condition);
+		return "success";
+	}
+	
+	@RequestMapping(path = "/createTag", method = { RequestMethod.GET, RequestMethod.POST })
+	public String createTag() throws JsonGenerationException, JsonMappingException, WxErrorException, IOException{
+		UserTag tag = new UserTag();
+		iService.post(Constants.CREATE_TAG_URL.replace("ACCESS_TOKEN", iService.getAccessToken()), tag.toJson());
 		return "success";
 	}
 	
