@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>我的订单</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<link rel="stylesheet" href="//cdn.bootcss.com/weui/1.1.1/style/weui.min.css">
+<link rel="stylesheet" href="//cdn.bootcss.com/jquery-weui/1.0.1/css/jquery-weui.min.css">
+<script src="//cdn.bootcss.com/jquery/1.11.0/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/jquery-weui/1.0.1/js/jquery-weui.min.js"></script>
+<!--标准mui.css-->
+<link rel="stylesheet" href="css/mui.min.css">
+<!--App自定义的css-->
+<link rel="stylesheet" type="text/css" href="css/app.css"/>
+<script src="js/mui.min.js"></script>
+<style>
+	.mui-table h4,.mui-table h5,.mui-table .mui-h5,.mui-table .mui-h6,.mui-table p{
+        margin-top: 0;
+    }
+    .mui-table h4{
+        line-height: 21px;
+        font-weight: 500;
+    }
+
+    .mui-table .oa-icon{
+        position: absolute;
+        right:0;
+        bottom: 0;
+    }
+    .mui-table .oa-icon-star-filled{
+        color:#f14e41;
+    }
+    .mui-content>.mui-table-view:first-child {
+	    margin-top: 0px;
+	}
+</style>
+</head>
+<body>
+	<div class="weui-tab">
+	  <div class="weui-navbar">
+	    <a class="weui-navbar__item weui-bar__item--on" href="#tab1">
+	       已提交订单
+	    </a>
+	    <a class="weui-navbar__item" href="#tab3">
+	      已拒绝订单
+	    </a>
+	    <a class="weui-navbar__item" href="#tab2">
+	      已完成订单
+	    </a>
+	  </div>
+	  <div class="weui-tab__bd">
+	    <div id="tab1" class="weui-tab__bd-item weui-tab__bd-item--active">
+	      	<div class="mui-content">
+	      		<div style="text-align: center;" th:unless="${#lists.size(applyList)} gt 0">
+			    	<p>暂无数据！</p>
+			    </div>
+			    <ul class="mui-table-view mui-table-view-striped mui-table-view-condensed" th:if="${#lists.size(applyList)} gt 0">
+			        <li class="mui-table-view-cell" th:each="order : ${applyList}" th:onclick="'javascript:confirm_stock(\''+${order.id}+'\');'">
+			            <div class="mui-table">
+			                <div class="mui-table-cell mui-col-xs-10">
+		                    	<div class="mui-row mui-ellipsis">
+		                    		<div class="mui-row">
+		                    			<div class="mui-col-xs-6">
+		                    				<span class="mui-h5">申请人:</span><span th:text="${order.user.userName}"></span>
+		                    			</div>
+			                    		<div class="mui-col-xs-6">
+			                    			<span class="mui-h5">数量:</span><span th:unless="${order.applyNum} eq null" th:text="${order.applyNum}+箱">100箱</span>
+			                    		</div>
+		                    		</div>
+		                    		<div class="mui-row" style="padding-top : 4px">
+		                    			<div class="mui-col-xs-6">
+			                    			<span class="mui-h5">总价:</span><span th:unless="${order.applyAmt} eq null" th:text="￥+${order.applyAmt}">￥70</span>
+			                    		</div>
+			                    		<div class="mui-col-xs-6">
+			                    			<span class="mui-h5">单价:</span><span th:unless="${order.applyUnitPric} eq null" th:text="￥+${order.applyUnitPric}">￥70</span>
+			                    		</div>
+		                    		</div>
+		                    	</div>
+			                    <h5 th:text="${#dates.format(order.createTime, 'yyyy年MM月dd日 HH:mm:ss')}">2017年11月2日 10:38:01</h5>
+			                    <p class="mui-h6" th:text="${order.applyMemo}"></p>
+			                </div>
+			                <div class="mui-table-cell mui-col-xs-2 mui-text-right">
+			                    <span class="mui-h5" th:if="${order.status eq '0'}">已申请</span>
+			                    <span class="mui-h5" th:if="${order.status eq '1'}">已确认</span>
+			                    <span class="mui-h5" th:if="${order.status eq '2'}">已拒绝</span>
+			                </div>
+			            </div>
+			        </li>
+			    </ul>
+			</div>
+	    </div>
+	    <div id="tab2" class="weui-tab__bd-item">
+	      <div class="mui-content">
+	      		<div style="text-align: center;" th:unless="${#lists.size(confirmList)} gt 0">
+			    	<p>暂无数据！</p>
+			    </div>
+			    <ul class="mui-table-view mui-table-view-striped mui-table-view-condensed" th:if="${#lists.size(confirmList)} gt 0">
+			        <li class="mui-table-view-cell" th:each="order : ${confirmList}">
+			            <div class="mui-table">
+			                <div class="mui-table-cell mui-col-xs-10">
+		                    	<div class="mui-row mui-ellipsis">
+		                    		<div class="mui-row">
+		                    			<div class="mui-col-xs-6">
+		                    				<span class="mui-h5">申请人:</span><span th:text="${order.user.userName}"></span>
+		                    			</div>
+			                    		<div class="mui-col-xs-6">
+			                    			<span class="mui-h5">数量:</span><span th:unless="${order.agreeNum} eq null" th:text="${order.agreeNum}+箱">100箱</span>
+			                    		</div>
+		                    		</div>
+		                    		<div class="mui-row" style="padding-top : 4px">
+		                    			<div class="mui-col-xs-6">
+			                    			<span class="mui-h5">总价:</span><span th:unless="${order.agreeAmt} eq null" th:text="￥+${order.agreeAmt}">￥70</span>
+			                    		</div>
+			                    		<div class="mui-col-xs-6">
+			                    			<span class="mui-h5">单价:</span><span th:unless="${order.agreeUnitPric} eq null" th:text="￥+${order.agreeUnitPric}">￥70</span>
+			                    		</div>
+		                    		</div>
+		                    	</div>
+			                    <h5 th:text="${#dates.format(order.createTime, 'yyyy年MM月dd日 HH:mm:ss')}">2017年11月2日 10:38:01</h5>
+			                    <p class="mui-h6" th:text="${order.agreeMemo}"></p>
+			                </div>
+			                <div class="mui-table-cell mui-col-xs-2 mui-text-right">
+			                    <span class="mui-h5" th:if="${order.status eq '0'}">已申请</span>
+			                    <span class="mui-h5" th:if="${order.status eq '1'}">已确认</span>
+			                    <span class="mui-h5" th:if="${order.status eq '2'}">已拒绝</span>
+			                </div>
+			            </div>
+			        </li>
+			    </ul>
+			</div>
+	    </div>
+	    <div id="tab3" class="weui-tab__bd-item">
+	      <div class="mui-content">
+	      		<div style="text-align: center;" th:unless="${#lists.size(rejectList)} gt 0">
+			    	<p>暂无数据！</p>
+			    </div>
+			    <ul class="mui-table-view mui-table-view-striped mui-table-view-condensed" th:if="${#lists.size(rejectList)} gt 0">
+			        <li class="mui-table-view-cell" th:each="order : ${rejectList}">
+			            <div class="mui-table">
+			                <div class="mui-table-cell mui-col-xs-10">
+		                    	<div class="mui-row mui-ellipsis">
+		                    		<div class="mui-row">
+		                    			<div class="mui-col-xs-6">
+		                    				<span class="mui-h5">申请人:</span><span th:text="${order.user.userName}"></span>
+		                    			</div>
+			                    		<div class="mui-col-xs-6">
+			                    			<span class="mui-h5">数量:</span><span th:unless="${order.agreeNum} eq null" th:text="${order.agreeNum}+箱">100箱</span>
+			                    		</div>
+		                    		</div>
+		                    		<div class="mui-row" style="padding-top : 4px">
+		                    			<div class="mui-col-xs-6">
+			                    			<span class="mui-h5">总价:</span><span th:unless="${order.agreeAmt} eq null" th:text="￥+${order.agreeAmt}">￥70</span>
+			                    		</div>
+			                    		<div class="mui-col-xs-6">
+			                    			<span class="mui-h5">单价:</span><span th:unless="${order.agreeUnitPric} eq null" th:text="￥+${order.agreeUnitPric}">￥70</span>
+			                    		</div>
+		                    		</div>
+		                    	</div>
+			                    <h5 th:text="${#dates.format(order.createTime, 'yyyy年MM月dd日 HH:mm:ss')}">2017年11月2日 10:38:01</h5>
+			                    <p class="mui-h6" th:text="${order.agreeMemo}"></p>
+			                </div>
+			                <div class="mui-table-cell mui-col-xs-2 mui-text-right">
+			                    <span class="mui-h5" th:if="${order.status eq '0'}">已申请</span>
+			                    <span class="mui-h5" th:if="${order.status eq '1'}">已确认</span>
+			                    <span class="mui-h5" th:if="${order.status eq '2'}">已拒绝</span>
+			                </div>
+			            </div>
+			        </li>
+			    </ul>
+			</div>
+	    </div>
+	  </div>
+	</div>
+	<script type="text/javascript">
+		function confirm_stock(id){
+			window.location.href = "./confirm_stock?id="+id;
+		}
+	</script>
+</body>
+</html>
