@@ -1,13 +1,15 @@
 package com.ydy.user.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,7 +26,6 @@ import com.soecode.wxtools.bean.result.WxOAuth2AccessTokenResult;
 import com.soecode.wxtools.exception.WxErrorException;
 import com.ydy.dto.IndexDto;
 import com.ydy.order.model.DivdendDto;
-import com.ydy.order.model.Dividend;
 import com.ydy.order.services.IDividendService;
 import com.ydy.user.model.User;
 import com.ydy.user.services.IUserService;
@@ -111,6 +112,14 @@ public class UserViewController {
 		model.addAttribute("allUserList", userService.getValidUserList());
 		return "boss_partner";
 	}
+	
+	@RequestMapping(path = "/allPartner", method = { RequestMethod.GET, RequestMethod.POST })
+	public String allPartner(Model model) {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM");
+		model.addAttribute("title", "本月新增合伙人");
+		model.addAttribute("userList", userService.getValidUserList(sdf.format(new Date())));
+		return "partner";
+	}
 
 	@RequestMapping(path = "/sale_detail", method = { RequestMethod.GET, RequestMethod.POST })
 	public String saleDetail(Model model) {
@@ -160,6 +169,7 @@ public class UserViewController {
 		model.addAttribute("visBonus", visBonus);
 		model.addAttribute("serverBonus", serverBonus);
 		model.addAttribute("saleBonus", saleBonus);
+		model.addAttribute("userId", userId);
 		return "dividend";
 	}
 

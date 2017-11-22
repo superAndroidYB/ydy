@@ -141,6 +141,11 @@ public class UserServiceImpl implements IUserService {
 		return userDao.findByUserTypeAndStatusAndDeleteFlag(Constants.UserType.USER_TYPE_PARTNER.getCode()
 				,Constants.UserStatus.USER_STATUS_VALID.getCode(),Constants.NO);
 	}
+	
+	@Override
+	public List<User> getValidUserList(String month) {
+		return userDao.getUsersByMonth(Constants.UserType.USER_TYPE_PARTNER.getCode(), Constants.UserStatus.USER_STATUS_VALID.getCode(), month, Constants.NO);
+	}
 
 	@Override
 	public IndexDto getIndexData() {

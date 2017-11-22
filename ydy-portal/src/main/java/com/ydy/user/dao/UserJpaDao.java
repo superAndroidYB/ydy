@@ -16,6 +16,9 @@ public interface UserJpaDao extends JpaRepository<User, String> {
 	User findByOpenidAndDeleteFlag(String openid, String deleteFlag);
 
 	List<User> findByUserTypeAndStatusAndDeleteFlag(String userType, String status, String deleteFlag);
+	
+	@Query("select t from User t where t.userType = ? and t.status = ? and date_format(t.createTime,'%Y-%m') like ? and t.deleteFlag = ?")
+	List<User> getUsersByMonth(String userType, String status, String createTime, String deleteFlag);
 
 	@Query("select count(*) from User t where t.userType = ? and t.status = ? and date_format(t.createTime,'%Y-%m') like ? and t.deleteFlag = ?")
 	int getCountPartnerByMonth(String userType, String status, String createTime, String deleteFlag);

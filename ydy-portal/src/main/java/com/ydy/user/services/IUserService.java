@@ -32,6 +32,8 @@ public interface IUserService {
 	
 	public List<User> getValidUserList();
 	
+	public List<User> getValidUserList(String month);
+	
 	public IndexDto getIndexData();
 	
 	

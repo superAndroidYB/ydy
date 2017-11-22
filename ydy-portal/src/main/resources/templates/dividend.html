@@ -75,6 +75,9 @@
 								<a href="javascript:;">
 									<div class="mui-media-body">
 										<div class="mui-row">
+											<div class="mui-row" th:if="${userId} == null">
+					                    		<span class="mui-h5">姓名:</span><span th:text="${divi.user.userName}">100箱</span>
+				                    		</div>
 				                    		<div class="mui-col-xs-6">
 				                    			<span class="mui-h5">提成金额:</span><span th:text="￥+${divi.amt}">100箱</span>
 				                    		</div>
@@ -107,6 +110,9 @@
 							<li class="mui-table-view-cell mui-media" th:each="divi : ${vis.dividends}">
 								<a href="javascript:;">
 									<div class="mui-media-body">
+										<div class="mui-row" th:if="${userId} == null">
+				                    		<span class="mui-h5">姓名:</span><span th:text="${divi.user.userName}">100箱</span>
+			                    		</div>
 										<div class="mui-row">
 				                    		<div class="mui-col-xs-6">
 				                    			<span class="mui-h5">提成金额:</span><span th:text="￥+${divi.amt}">100箱</span>
@@ -141,6 +147,9 @@
 								<a href="javascript:;">
 									<div class="mui-media-body">
 										<div class="mui-row">
+											<div class="mui-row" th:if="${userId} == null">
+					                    		<span class="mui-h5">姓名:</span><span th:text="${divi.user.userName}">100箱</span>
+				                    		</div>
 				                    		<div class="mui-col-xs-6">
 				                    			<span class="mui-h5">提成金额:</span><span th:text="￥+${divi.amt}">100箱</span>
 				                    		</div>

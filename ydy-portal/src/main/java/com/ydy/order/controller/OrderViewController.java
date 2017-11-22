@@ -1,5 +1,9 @@
 package com.ydy.order.controller;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,6 +55,14 @@ public class OrderViewController {
 		model.addAttribute("confirmList",orderService.getOrderListByStatus(Constants.OrderStatus.ORDER_CONFIRM.getCode(), null));
 		model.addAttribute("rejectList",orderService.getOrderListByStatus(Constants.OrderStatus.ORDER_REJECT.getCode(), null));
 		return "boss_order";
+	}
+	
+	@RequestMapping(value = "/allOrder", method = { RequestMethod.GET, RequestMethod.POST })
+	public String allOrder(Model model,HttpSession session) {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM");
+		List<Order> orders = orderDao.findByStatusAndCreateTimeLike(Constants.OrderStatus.ORDER_CONFIRM.getCode(), sdf.format(new Date()));
+		model.addAttribute("confirmList", orders);
+		return "all_order";
 	}
 	
 	@RequestMapping(value = "/stockWait", method = { RequestMethod.GET, RequestMethod.POST })

@@ -19,11 +19,14 @@ public interface DividendJpaDao extends JpaRepository<Dividend, String>{
 	@Query("select sum(t.amt) from Dividend t where t.user.id = ? and t.subject = ? and date_format(t.createTime,'%Y-%m') like ?")
 	BigDecimal getSumAmtByUser(String userId, String subject, String month);
 	
+	@Query("select sum(t.amt) from Dividend t where t.subject = ? and date_format(t.createTime,'%Y-%m') like ?")
+	BigDecimal getSumAmt(String subject, String month);
+	
 	@Query("select sum(t.amt) from Dividend t where date_format(t.createTime,'%Y-%m') like ?")
 	BigDecimal getSumAmt(String month);
 	
 	
 	List<Dividend> findByUserIdAndSubjectOrderByCreateTimeDesc(String userId,String subject);
 	
-
+	List<Dividend> findBySubjectOrderByCreateTimeDesc(String subject);
 }

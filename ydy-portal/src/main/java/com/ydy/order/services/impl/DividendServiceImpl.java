@@ -7,6 +7,7 @@ import java.util.UUID;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -179,7 +180,12 @@ public class DividendServiceImpl implements IDividendService {
 			DivdendDto dto = new DivdendDto();
 			dto.setMonth(string);
 
-			BigDecimal amt = dividendDao.getSumAmtByUser(userId, subject, string);
+			BigDecimal amt = BigDecimal.ZERO;
+			if(StringUtils.isBlank(userId)){
+				amt = dividendDao.getSumAmt(subject, string);
+			}else{
+				amt = dividendDao.getSumAmtByUser(userId, subject, string);
+			}
 			dto.setAmt(amt == null ? BigDecimal.ZERO : amt);
 			dto.setSubject(subject);
 			
@@ -193,7 +199,11 @@ public class DividendServiceImpl implements IDividendService {
 
 	@Override
 	public List<Dividend> getDividendList(String userId, String subject) {
-		return dividendDao.findByUserIdAndSubjectOrderByCreateTimeDesc(userId, subject);
+		if(StringUtils.isBlank(userId)){
+			return dividendDao.findBySubjectOrderByCreateTimeDesc(subject);
+		}else{
+			return dividendDao.findByUserIdAndSubjectOrderByCreateTimeDesc(userId, subject);
+		}
 	}
 
 }
