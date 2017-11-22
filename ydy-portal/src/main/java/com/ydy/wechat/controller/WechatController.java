@@ -18,14 +18,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.soecode.wxtools.api.IService;
 import com.soecode.wxtools.api.WxConsts;
 import com.soecode.wxtools.api.WxService;
-import com.soecode.wxtools.bean.WxMenu;
-import com.soecode.wxtools.bean.WxMenu.WxMenuButton;
 import com.soecode.wxtools.exception.WxErrorException;
 import com.ydy.utils.Constants;
-import com.ydy.wechat.model.UserTag;
+import com.ydy.wechat.model.WxAddTag;
+import com.ydy.wechat.model.WxMenu;
+import com.ydy.wechat.model.WxMenu.WxMenuButton;
+import com.ydy.wechat.model.WxMenu.WxMenuRule;
+import com.ydy.wechat.model.WxTag;
 
 @RestController
 public class WechatController {
@@ -81,27 +84,126 @@ public class WechatController {
 	}
 	
 	@RequestMapping(path = "/createMenu", method = { RequestMethod.GET, RequestMethod.POST })
-	public String createMenu() throws WxErrorException{
-		boolean condition = false;
+	public String createMenu() throws WxErrorException, JsonGenerationException, JsonMappingException, IOException{
+		String result = "";
+		result += doCreateMenu1();
+		//result += doCreateMenu2();
+		//result += doCreateMenu3();
+		return result;
+	}
+	
+	@RequestMapping(path = "/deleteMenu", method = { RequestMethod.GET, RequestMethod.POST })
+	public String deleteMenu() throws WxErrorException {
+		String deleteMenu = iService.deleteMenu();
+		return deleteMenu;
+	}
+	
+	public String doCreateMenu1() throws WxErrorException, JsonGenerationException, JsonMappingException, IOException{
 		WxMenu menu = new WxMenu();
 		List<WxMenuButton> button = new ArrayList<>();
 		WxMenuButton btn1 = new WxMenuButton();
-		btn1.setKey("index");
-		btn1.setName("御鼎园");
+		btn1.setKey(Constants.WxBtn.INDEX.getCode());
+		btn1.setName(Constants.WxBtn.INDEX.getDesc());
 		btn1.setType(WxConsts.BUTTON_VIEW);
 		btn1.setUrl("http://www.mydy520.com/");
 		button.add(btn1);
 		
+		WxMenuButton btn2 = new WxMenuButton();
+		btn2.setKey(Constants.WxBtn.BOSS_ENTRY.getCode());
+		btn2.setName(Constants.WxBtn.BOSS_ENTRY.getDesc());
+		btn2.setType(WxConsts.BUTTON_VIEW);
+		btn2.setUrl("http://y18571849l.iask.in/ydy/");
+		button.add(btn2);
+		
 		menu.setButton(button);
-		iService.createMenu(menu, condition);
-		return "success";
+		return iService.post(WxConsts.URL_CREATE_MENU.replace("ACCESS_TOKEN", iService.getAccessToken()), menu.toJson());
+	}
+	
+	public String doCreateMenu2() throws WxErrorException, JsonGenerationException, JsonMappingException, IOException{
+		WxMenu menu = new WxMenu();
+		List<WxMenuButton> button = new ArrayList<>();
+		WxMenuButton btn1 = new WxMenuButton();
+		btn1.setKey(Constants.WxBtn.BOSS.getCode());
+		btn1.setName(Constants.WxBtn.BOSS.getDesc());
+		List<WxMenuButton> sub_button = new ArrayList<>();
+		WxMenuButton e = new WxMenuButton();
+		e.setKey(Constants.WxBtn.BOSS_ENTRY.getCode());
+		e.setName(Constants.WxBtn.BOSS_ENTRY.getDesc());
+		e.setType(WxConsts.BUTTON_CLICK);
+		sub_button.add(e);
+		btn1.setSub_button(sub_button);
+		button.add(btn1);
+		menu.setButton(button);
+		
+		WxMenuRule matchrule = new WxMenuRule();
+		matchrule.setTag_id("101");
+		menu.setMatchrule(matchrule );
+		return iService.post(WxConsts.URL_CREATE_MENU_CONDITIONAL.replace("ACCESS_TOKEN", iService.getAccessToken()), menu.toJson());
+	}
+	
+	public String doCreateMenu3() throws WxErrorException, JsonGenerationException, JsonMappingException, IOException{
+		WxMenu menu = new WxMenu();
+		List<WxMenuButton> button = new ArrayList<>();
+		WxMenuButton btn1 = new WxMenuButton();
+		btn1.setKey(Constants.WxBtn.PARTNER.getCode());
+		btn1.setName(Constants.WxBtn.PARTNER.getDesc());
+		List<WxMenuButton> sub_button = new ArrayList<>();
+		WxMenuButton e = new WxMenuButton();
+		e.setKey(Constants.WxBtn.PARTNER_CENTER.getCode());
+		e.setName(Constants.WxBtn.PARTNER_CENTER.getDesc());
+		e.setType(WxConsts.BUTTON_CLICK);
+		sub_button.add(e);
+		btn1.setSub_button(sub_button);
+		button.add(btn1);
+		menu.setButton(button);
+		
+		WxMenuRule matchrule = new WxMenuRule();
+		matchrule.setTag_id("102");
+		menu.setMatchrule(matchrule );
+		return iService.post(WxConsts.URL_CREATE_MENU_CONDITIONAL.replace("ACCESS_TOKEN", iService.getAccessToken()), menu.toJson());
 	}
 	
 	@RequestMapping(path = "/createTag", method = { RequestMethod.GET, RequestMethod.POST })
 	public String createTag() throws JsonGenerationException, JsonMappingException, WxErrorException, IOException{
-		UserTag tag = new UserTag();
-		iService.post(Constants.CREATE_TAG_URL.replace("ACCESS_TOKEN", iService.getAccessToken()), tag.toJson());
-		return "success";
+		String str = "";
+		str += doCreateTag("老板");
+		str += doCreateTag("合伙人");
+		return str;
 	}
+	
+	@RequestMapping(path = "/deleteTag", method = { RequestMethod.GET, RequestMethod.POST })
+	public String deleteTag() throws JsonGenerationException, JsonMappingException, WxErrorException, IOException{
+		String str = "";
+		return str;
+	}
+	
+	@RequestMapping(path = "/queryTag", method = { RequestMethod.GET, RequestMethod.POST })
+	public String queryTag() throws WxErrorException{
+		String get = iService.get(Constants.QUERY_TAG_URL.replace("ACCESS_TOKEN", iService.getAccessToken()), null);
+		return get;
+	}
+	
+	private String doCreateTag(String tagName) throws JsonGenerationException, JsonMappingException, WxErrorException, IOException{
+		WxTag wxTag = new WxTag();
+		WxTag.Tag tag = new WxTag.Tag();
+		tag.setName(tagName);
+		wxTag.setTag(tag);
+		
+		String post = iService.post(Constants.CREATE_TAG_URL.replace("ACCESS_TOKEN", iService.getAccessToken()), wxTag.toJson());
+		return post;
+	}
+	
+	@RequestMapping(path = "/tagging", method = { RequestMethod.GET, RequestMethod.POST })
+	public String tagging() throws WxErrorException, JsonProcessingException{
+		WxAddTag at = new WxAddTag();
+		List<String> openid_list = new ArrayList<>();
+		openid_list.add("oY6Evwk5cRxGCaXaqXeIvLhuCbLA");
+		at.setOpenid_list(openid_list );
+		at.setTagid(102);
+		String post = iService.post(Constants.BATCH_TAGGING_URL.replace("ACCESS_TOKEN", iService.getAccessToken()), at.toJson());
+		return post;
+	}
+	
+	
 	
 }

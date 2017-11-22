@@ -2,6 +2,7 @@ package com.ydy.user.services.impl;
 
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -14,9 +15,11 @@ import org.springframework.stereotype.Service;
 import com.ydy.dto.IndexDto;
 import com.ydy.dto.ResponseDto;
 import com.ydy.user.dao.AddressJpaDao;
+import com.ydy.user.dao.DividendJpaDao;
 import com.ydy.user.dao.OrderJpaDao;
 import com.ydy.user.dao.UserJpaDao;
 import com.ydy.user.model.Address;
+import com.ydy.user.model.AddressDto;
 import com.ydy.user.model.User;
 import com.ydy.user.services.IUserService;
 import com.ydy.utils.Constants;
@@ -30,7 +33,19 @@ public class UserServiceImpl implements IUserService {
 	private AddressJpaDao addressDao;
 	@Autowired
 	private OrderJpaDao orderDao;
+	@Autowired
+	private DividendJpaDao dividendDao;
 
+	
+	@Override
+	public User saveUser(User user) {
+		if(StringUtils.isBlank(user.getId())){
+			user.setId(UUID.randomUUID().toString());
+			user.setDeleteFlag(Constants.NO);
+		}
+		return userDao.save(user);
+	}
+	
 	@Override
 	public boolean checkMobileExtis(String mobile) {
 		User user = userDao.findByUserMobileAndDeleteFlag(mobile, Constants.NO);
@@ -48,6 +63,11 @@ public class UserServiceImpl implements IUserService {
 	@Override
 	public User findUserById(String id) {
 		return userDao.getOne(id);
+	}
+	
+	@Override
+	public User findUserByOpenid(String openid) {
+		return userDao.findByOpenidAndDeleteFlag(openid, Constants.NO);
 	}
 
 	@Override
@@ -130,17 +150,19 @@ public class UserServiceImpl implements IUserService {
 		List<User> findByUserTypeAndStatusAndDeleteFlag = userDao.findByUserTypeAndStatusAndDeleteFlag(Constants.UserType.USER_TYPE_PARTNER.getCode()
 				, Constants.UserStatus.USER_STATUS_REGISTER.getCode(),Constants.NO);
 		result.setPartnerMsg(findByUserTypeAndStatusAndDeleteFlag.size() > 0 ? String.format("%s个申请待处理", findByUserTypeAndStatusAndDeleteFlag.size()) : "点击查看详情");
-		result.setMonth(DateFormatUtils.format(new Date(), "yyyy年MM月dd日"));
+		result.setMonth(DateFormatUtils.format(new Date(), "yyyy年MM月"));
 		result.setGetTime(DateFormatUtils.format(new Date(), "yyyy年MM月dd日 hh:mm:ss"));
-		BigDecimal sumAgreeNumByStatus = orderDao.sumAgreeNumByStatus(Constants.OrderStatus.ORDER_CONFIRM.getCode(),DateFormatUtils.format(new Date(), "yyyy-MM-dd")+"%");
-		result.setShippingQty(new DecimalFormat(",###").format(sumAgreeNumByStatus));
-		BigDecimal sumAgreeAmtByStatus = orderDao.sumAgreeAmtByStatus(Constants.OrderStatus.ORDER_CONFIRM.getCode(),DateFormatUtils.format(new Date(), "yyyy-MM-dd")+"%");
-		result.setSaleAmt(new DecimalFormat(",###").format(sumAgreeAmtByStatus));
+		String month = DateFormatUtils.format(new Date(), "yyyy-MM");
+		BigDecimal sumAgreeNumByStatus = orderDao.sumAgreeNumByStatus(Constants.OrderStatus.ORDER_CONFIRM.getCode(),month+"%");
+		result.setShippingQty(new DecimalFormat(",###").format(sumAgreeNumByStatus == null ? BigDecimal.ZERO : sumAgreeNumByStatus));
+		BigDecimal sumAgreeAmtByStatus = orderDao.sumAgreeAmtByStatus(Constants.OrderStatus.ORDER_CONFIRM.getCode(),month+"%");
+		result.setSaleAmt(new DecimalFormat(",###").format(sumAgreeAmtByStatus == null ? BigDecimal.ZERO : sumAgreeAmtByStatus));
 		int countPartnerByMonth = userDao.getCountPartnerByMonth(Constants.UserType.USER_TYPE_PARTNER.getCode()
 				, Constants.UserStatus.USER_STATUS_VALID.getCode()
-				, DateFormatUtils.format(new Date(), "yyyy-MM-dd")+"%", Constants.NO);
+				, month +"%", Constants.NO);
 		result.setAddPartnerNum(Integer.toString(countPartnerByMonth));
-		//TODO
+		BigDecimal dAmt = dividendDao.getSumAmt(month);
+		result.setDividendAmt(new DecimalFormat(",###").format(dAmt == null ? BigDecimal.ZERO : dAmt));
 		return result;
 	}
 
@@ -157,5 +179,22 @@ public class UserServiceImpl implements IUserService {
 	public int getNextUserNum(User user) {
 		return userDao.countByReferrerUserIdAndDeleteFlag(user.getId(), Constants.NO);
 	}
+
+	@Override
+	public List<AddressDto> getAddressByUser(User user) {
+		List<AddressDto> dtoList = new ArrayList<>();
+		List<Address> findByUserId = addressDao.findByUserId(user.getId());
+		for (Address address : findByUserId) {
+			AddressDto e = new AddressDto();
+			e.setId(address.getId());
+			e.setText(address.getAddress());
+			dtoList.add(e);
+		}
+		return dtoList;
+	}
+
+	
+
+	
 
 }

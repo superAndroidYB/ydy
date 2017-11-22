@@ -68,7 +68,7 @@
 	<div>
 		<div class="bg bg-blur"></div>
 		<div class="content content-front">
-			<img src="images/muwu.jpg" width="100px" height="100px"
+			<img th:src="${session.USER.headimgurl} eq null ? 'images/default_head.jpg' : ${session.USER.headimgurl}" width="100px" height="100px"
 				style="margin-top: 10px;" class="img-circle">
 			<h4>
 				<strong th:text="${user.userName}">张三</strong>
@@ -96,7 +96,7 @@
 					<span class="mui-badge mui-badge-primary" style="margin-right: 30px" th:if="${user.nextNum} gt 0" th:text="${user.nextNum}">33</span>
 				</li>
 				<li class="mui-table-view-cell"><a class="mui-navigate-right"
-					style="font-size: 20px" href="dividend"> 我的分红 </a></li>
+					style="font-size: 20px" th:href="@{/dividend(userId=${session.USER.id})}"> 我的分红 </a></li>
 			</ul>
 		</div>
 	</div>

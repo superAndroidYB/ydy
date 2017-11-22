@@ -8,58 +8,155 @@
 	content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
+<link rel="stylesheet" href="//cdn.bootcss.com/weui/1.1.1/style/weui.min.css">
+<link rel="stylesheet" href="//cdn.bootcss.com/jquery-weui/1.0.1/css/jquery-weui.min.css">
+<script src="//cdn.bootcss.com/jquery/1.11.0/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/jquery-weui/1.0.1/js/jquery-weui.min.js"></script>
+<!--标准mui.css-->
 <link rel="stylesheet" href="css/mui.min.css">
-<script type="text/javascript" src="js/mui.min.js"></script>
 <!--App自定义的css-->
-<link rel="stylesheet" type="text/css" href="css/app.css" />
-<script type="text/javascript" src="js/mui.min.js"></script>
-<script src="js/jquery-3.2.1.min.js"></script>
-<script src="js/ydy.js"></script>
+<link rel="stylesheet" type="text/css" href="css/app.css"/>
+<script src="js/mui.min.js"></script>
 </head>
 <body>
-	<div class="mui-content">
-		<div class="mui-card">
-			<!--页眉，放置标题-->
-			<div class="mui-card-header mui-card-media">
-				<img src="images/logo.png" />
-				<div class="mui-media-body">
-					2017年10月
-					<p>发表于 2016-06-30 15:30</p>
+	<!--<div class="mui-content">
+		<div style="text-align: center;" th:unless="${#lists.size(dividendInfo)} gt 0">
+	    	<p>暂无数据！</p>
+	    </div>
+	    <div th:if="${#lists.size(dividendInfo)} gt 0">
+			<div class="mui-card" th:each="divi : ${dividendInfo}">
+				<div class="mui-card-header">
+					<span th:text="${divi.month}">2017年10月</span>
+				</div>
+				<div class="mui-card-content">
+					<ul class="mui-table-view">
+						<li class="mui-table-view-cell mui-media" th:each = "diviinner : ${divi.innerDto}">
+							<a href="javascript:;">
+								<img class="mui-media-object mui-pull-left" src="images/fenhong.png">
+								<div class="mui-media-body">
+									<strong th:text="${diviinner.amt}">888888</strong>
+									<p class='mui-ellipsis' th:text="${diviinner.subject}">同级分红</p>
+								</div>
+							</a>
+						</li>
+					</ul>
 				</div>
 			</div>
-			<!--内容区-->
-			<div class="mui-card-content">
-				<ul class="mui-table-view">
-					<li class="mui-table-view-cell mui-media">
-						<a href="javascript:;">
-							<img class="mui-media-object mui-pull-left" src="images/shuijiao.jpg">
-							<div class="mui-media-body">
-								<strong>888888</strong>
-								<p class='mui-ellipsis'>同级分红</p>
-							</div>
-						</a>
-					</li>
-					<li class="mui-table-view-cell mui-media">
-						<a href="javascript:;">
-							<img class="mui-media-object mui-pull-left" src="images/shuijiao.jpg">
-							<div class="mui-media-body">
-								<strong>888888</strong>
-								<p class='mui-ellipsis'>服务分红</p>
-							</div>
-						</a>
-					</li>
-					<li class="mui-table-view-cell mui-media">
-						<a href="javascript:;">
-							<img class="mui-media-object mui-pull-left" src="images/shuijiao.jpg">
-							<div class="mui-media-body">
-								<strong>888888</strong>
-								<p class='mui-ellipsis'>月度绩效分红</p>
-							</div>
-						</a>
-					</li>
-				</ul>
-			</div>
 		</div>
+	</div>-->
+	<div class="weui-tab">
+		<div class="weui-navbar">
+		    <a class="weui-navbar__item weui-bar__item--on" href="#tab1">
+		       同级分红
+		    </a>
+		    <a class="weui-navbar__item" href="#tab2">
+		       服务分红
+		    </a>
+		    <a class="weui-navbar__item" href="#tab3">
+		      月度销售分红
+		    </a>
+		 </div>
+		 <div class="weui-tab__bd">
+	    	<div id="tab1" class="weui-tab__bd-item weui-tab__bd-item--active">
+	    		<div class="mui-content">
+	    			<div th:each="vis : ${visBonus}">
+		    			<div style="background-color: #eae9e9;">
+		    				<div class="mui-row">
+		                    	<div class="mui-col-xs-8">
+		                    			<p style="padding-left:10px;margin-bottom: 0px;">月份：<span th:text="${vis.month}">2107年11月</span></p>
+		                    	</div>
+		                    	<div class="mui-col-xs-4">
+		                    			<p style="margin-bottom: 0px;">合计：<span th:text="${vis.amt}">￥8888</span></p>
+		                    	</div>
+			                </div>
+						</div>
+			    		<ul class="mui-table-view">
+							<li class="mui-table-view-cell mui-media" th:each="divi : ${vis.dividends}">
+								<a href="javascript:;">
+									<div class="mui-media-body">
+										<div class="mui-row">
+				                    		<div class="mui-col-xs-6">
+				                    			<span class="mui-h5">提成金额:</span><span th:text="￥+${divi.amt}">100箱</span>
+				                    		</div>
+				                    		<div class="mui-col-xs-6">
+				                    			<span class="mui-h5">提成比例:</span><span th:text="${divi.coefficient}*100 + '%'">￥70</span>
+				                    		</div>
+			                    		</div>
+										<p class='mui-ellipsis' th:text="${divi.memo}">静静的看这个世界，最后终于疯了</p>
+									</div>
+								</a>
+							</li>
+						</ul>
+					</div>
+	    		</div>
+	    	</div>
+	    	<div id="tab2" class="weui-tab__bd-item">
+	    		<div class="mui-content">
+	    			<div th:each="vis : ${serverBonus}">
+		    			<div style="background-color: #eae9e9;">
+		    				<div class="mui-row">
+		                    	<div class="mui-col-xs-8">
+		                    			<p style="padding-left:10px; margin-bottom: 0px;">月份：<span th:text="${vis.month}">2107年11月</span></p>
+		                    	</div>
+		                    	<div class="mui-col-xs-4">
+		                    			<p style="margin-bottom: 0px;">合计：<span th:text="${vis.amt}">￥8888</span></p>
+		                    	</div>
+			                </div>
+						</div>
+			    		<ul class="mui-table-view">
+							<li class="mui-table-view-cell mui-media" th:each="divi : ${vis.dividends}">
+								<a href="javascript:;">
+									<div class="mui-media-body">
+										<div class="mui-row">
+				                    		<div class="mui-col-xs-6">
+				                    			<span class="mui-h5">提成金额:</span><span th:text="￥+${divi.amt}">100箱</span>
+				                    		</div>
+				                    		<div class="mui-col-xs-6">
+				                    			<span class="mui-h5">提成比例:</span><span th:text="${divi.coefficient}*100 + '%'">￥70</span>
+				                    		</div>
+			                    		</div>
+										<p class='mui-ellipsis' th:text="${divi.memo}">静静的看这个世界，最后终于疯了</p>
+									</div>
+								</a>
+							</li>
+						</ul>
+					</div>
+	    		</div>
+	    	</div>
+	    	<div id="tab3" class="weui-tab__bd-item">
+	    		<div class="mui-content">
+	    			<div th:each="vis : ${saleBonus}">
+		    			<div style="background-color: #eae9e9;">
+		    				<div class="mui-row">
+		                    	<div class="mui-col-xs-8">
+		                    			<p style="padding-left:10px; margin-bottom: 0px;">月份：<span th:text="${vis.month}">2107年11月</span></p>
+		                    	</div>
+		                    	<div class="mui-col-xs-4">
+		                    			<p style="margin-bottom: 0px;">合计：<span th:text="${vis.amt}">￥8888</span></p>
+		                    	</div>
+			                </div>
+						</div>
+			    		<ul class="mui-table-view">
+							<li class="mui-table-view-cell mui-media" th:each="divi : ${vis.dividends}">
+								<a href="javascript:;">
+									<div class="mui-media-body">
+										<div class="mui-row">
+				                    		<div class="mui-col-xs-6">
+				                    			<span class="mui-h5">提成金额:</span><span th:text="￥+${divi.amt}">100箱</span>
+				                    		</div>
+				                    		<div class="mui-col-xs-6">
+				                    			<span class="mui-h5">提成比例:</span><span th:text="${divi.coefficient}*100 + '%'">￥70</span>
+				                    		</div>
+			                    		</div>
+										<p class='mui-ellipsis' th:text="${divi.memo}">静静的看这个世界，最后终于疯了</p>
+									</div>
+								</a>
+							</li>
+						</ul>
+					</div>
+	    		</div>
+	    	</div>
+	    </div>
 	</div>
 </body>
 </html>

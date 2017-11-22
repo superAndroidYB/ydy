@@ -12,10 +12,12 @@ public interface UserJpaDao extends JpaRepository<User, String> {
 	User findByUserMobileAndDeleteFlag(String userMobile, String deleteFlag);
 
 	User findByRecomCodeAndDeleteFlag(String recomCode, String deleteFlag);
+	
+	User findByOpenidAndDeleteFlag(String openid, String deleteFlag);
 
 	List<User> findByUserTypeAndStatusAndDeleteFlag(String userType, String status, String deleteFlag);
 
-	@Query("select count(*) from User t where t.userType = ? and t.status = ? and t.createTime like ? and t.deleteFlag = ?")
+	@Query("select count(*) from User t where t.userType = ? and t.status = ? and date_format(t.createTime,'%Y-%m') like ? and t.deleteFlag = ?")
 	int getCountPartnerByMonth(String userType, String status, String createTime, String deleteFlag);
 	
 	List<User> findByReferrerUserIdAndDeleteFlag(String id, String deleteFlag);

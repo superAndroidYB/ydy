@@ -1,7 +1,9 @@
 package com.ydy.user.model;
 
 import javax.persistence.Column;
+import javax.persistence.MappedSuperclass;
 
+@MappedSuperclass
 public class WxUser {
 
 	@Column(name = "SUBSCRIBE_")

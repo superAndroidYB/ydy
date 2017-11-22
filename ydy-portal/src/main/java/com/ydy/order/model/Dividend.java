@@ -14,7 +14,7 @@ import javax.persistence.Table;
 import com.ydy.user.model.User;
 
 @Entity
-@Table(name = "YDY_DIVIDEND")
+@Table(name = "ydy_dividend")
 public class Dividend {
 
 	@Id
@@ -44,7 +44,7 @@ public class Dividend {
 	@Column(name = "MEMO_", length = 500)
 	private String memo;
 	
-	@Column(name = "CREATE_TIME_")
+	@Column(name = "CREATE_TIME_",columnDefinition = "DATETIME default NOW() comment '创建时间'")
 	private Date createTime;
 
 	public String getId() {

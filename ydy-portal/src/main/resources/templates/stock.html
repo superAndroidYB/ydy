@@ -2,17 +2,21 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="utf-8">
-<title>进货</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <meta name="viewport"
 	content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
+<title>进货</title>
 <link rel="stylesheet" href="css/mui.min.css">
 <link
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
 	rel="stylesheet">
+<link href="css/mui.picker.css" rel="stylesheet" />
+<link href="css/mui.poppicker.css" rel="stylesheet" />
 <script type="text/javascript" src="js/mui.min.js"></script>
+<script src="js/mui.picker.js"></script>
+<script src="js/mui.poppicker.js"></script>
 <script src="js/jquery-3.2.1.min.js"></script>
 <script src="js/ydy.js"></script>
 <style type="text/css">
@@ -26,15 +30,15 @@
 				<label style="width: 40%">请输入进货数量 <p>（单位：箱）</p></label>
 				<div class="mui-numbox">
 					<button class="mui-btn mui-btn-numbox-minus" type="button">-</button>
-					<input name="applyNum" class="mui-input-numbox" type="number" />
+					<input id="applyNum" name="applyNum" class="mui-input-numbox" type="number" value="30" onchange="onChangeLis()"/>
 					<button class="mui-btn mui-btn-numbox-plus" type="button">+</button>
 				</div>
 			</div>
 			<div class="mui-input-row" style="height: 100px">
 				<label>收货地址</label>
 				<textarea id="textarea" rows="5" name="addressStr" style="width: 50%; float: left;"
-				placeholder="请填写收货地址，或从已录入地址中选择"></textarea>
-				<a style="width: 15%;float: right; margin-top: 40px"><span class="mui-icon mui-icon-bars"></span></a>
+				placeholder="请填写收货地址，或从已录入地址中选择" required="required"></textarea>
+				<a id="showUserPicker" style="width: 15%;float: right; margin-top: 40px"><span class="mui-icon mui-icon-bars"></span></a>
 			</div>
 			<div class="mui-input-row" style="height: 100px">
 				<label>备注</label>
@@ -52,9 +56,17 @@
 	</div>
 	
 	<script type="text/javascript">
+		function onChangeLis(){
+			var num = parseInt($("#applyNum").val());
+			if(num < 30){
+				$("#applyNum").val("30");
+				mui.toast("至少要进货30箱！");
+			}
+		}
+		
 		function doStock(){
 			var res = false;
-			$.ajax({
+			mui.ajax({
 				url : "doStock",
 				data : $("#stockForm").serialize(),
 				async : false,
@@ -74,6 +86,30 @@
 			});
 			return false;
 		}
+		
+		(function($, doc) {
+			$.init();
+			$.ready(function() {
+				var userPicker = new $.PopPicker();
+				$.ajax({
+					url : 'getAddressData',
+					async : false,
+					success : function(res){
+						userPicker.setData(res);
+					}
+				});
+				var showUserPickerButton = doc.getElementById('showUserPicker');
+				var userResult = doc.getElementById('textarea');
+				showUserPickerButton.addEventListener('tap', function(event) {
+					userPicker.show(function(items) {
+						var obj = items[0];
+						userResult.innerText = obj.text;
+						//返回 false 可以阻止选择框的关闭
+						//return false;
+					});
+				}, false);
+			});
+		})(mui, document);
 	</script>
 </body>
 </html>

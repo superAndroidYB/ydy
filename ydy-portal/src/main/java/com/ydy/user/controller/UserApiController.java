@@ -1,6 +1,8 @@
 package com.ydy.user.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.taobao.api.response.AlibabaAliqinFcSmsNumSendResponse;
 import com.ydy.dto.ResponseDto;
+import com.ydy.user.model.AddressDto;
 import com.ydy.user.model.User;
 import com.ydy.user.services.IUserService;
 import com.ydy.utils.Constants;
@@ -93,5 +96,32 @@ public class UserApiController {
 		return ResponseEntity.ok(userService.doRegisterInfo(user));
 	}
 	
+	@RequestMapping(path = "/getAddressData", method = { RequestMethod.GET, RequestMethod.POST })
+	public ResponseEntity<List<AddressDto>> getAddressData(HttpSession session){
+		User user = (User) session.getAttribute(Constants.USER);
+		if(user != null){
+			return ResponseEntity.ok(userService.getAddressByUser(user));
+		}
+		return ResponseEntity.ok(new ArrayList<>());
+	}
+	
+	@RequestMapping(path = "/doConfirm", method = { RequestMethod.GET, RequestMethod.POST })
+	public ResponseEntity<String> doConfirm(String id){
+		User user = userService.findUserById(id);
+		user.setStatus(Constants.UserStatus.USER_STATUS_VALID.getCode());
+		
+		//生成推荐码
+		Random random = new Random();
+		String s = Integer.toString((int) random.nextInt(1000000));
+		user.setRecomCode(s);
+		
+		ResponseDto doVerifRecomCode = userService.doVerifRecomCode(user);
+		while(doVerifRecomCode.getSuccess()){
+			user.setRecomCode(Integer.toString((int) random.nextInt(1000000)));
+			doVerifRecomCode = userService.doVerifRecomCode(user);
+		}
+		userService.saveUser(user);
+		return ResponseEntity.ok("");
+	}
 
 }

@@ -19,35 +19,35 @@
 </style>
 </head>
 <body>
-	<div class="mui-content">
+	<div class="mui-content" th:object="${order}">
 		<div style="background-color: #eae9e9;">
 			<p style="padding: 10px;margin-bottom: 0px;"><span class="mui-icon mui-icon-info"></span>合伙人申请信息</p>
 		</div>
 		<div class="mui-input-group" style="background-color: white;">
 		    <div class="mui-input-row">
 		        <label>合伙人：</label>
-		        <input type="text" value="张三" readonly="readonly"/>
+		        <input type="text" th:value="*{user.userName}" readonly="readonly"/>
 		    </div>
 		    <div class="mui-input-row">
 		        <label>手机号：</label>
-		        <input type="text" value="123456" readonly="readonly"/>
+		        <input type="text" th:value="*{user.userMobile}" readonly="readonly"/>
 		    </div>
 		    <div class="mui-input-row">
 		        <label>推荐人：</label>
-		        <input type="text" value="李四" readonly="readonly"/>
+		        <input type="text" th:value="*{user.referrerUser} eq null ? '无' : *{user.referrerUser.userName}" readonly="readonly"/>
 		    </div>
 		    <div class="mui-input-row">
 		        <label>申请数量：</label>
-		        <input type="text" value="123" readonly="readonly"/>
+		        <input type="text" th:value="*{applyNum}" readonly="readonly" />
 		    </div>
 		     <div class="mui-input-row" style="height : 100px;">
 		        <label>收货地址：</label>
-		        <textarea rows="5" cols="" readonly="readonly" style="padding: 10px">
+		        <textarea rows="5" cols="" readonly="readonly" style="padding: 10px" th:text="*{addressStr}">
 		        </textarea>
 		    </div>
 		    <div class="mui-input-row" style="height : 100px;">
 		        <label>申请备注：</label>
-		        <textarea rows="5" cols="" readonly="readonly" style="padding: 10px">
+		        <textarea rows="5" cols="" readonly="readonly" style="padding: 10px" th:text="*{applyMemo}">
 		        </textarea>
 		    </div>
 	    </div>
@@ -56,18 +56,18 @@
 			<p style="padding: 10px;margin-bottom: 0px;"><span class="mui-icon mui-icon-info"></span>请审批确认</p>
 		</div>
 		<form id="stockForm" class="mui-input-group" onsubmit="return doConfirmStock();">
-			<input type="hidden" name="id"/>
+			<input type="hidden" name="id" th:value="*{id}"/>
 			<div class="mui-input-row" style="height: 50px">
 				<label style="width: 40%">批准进货数量 <p>（单位：箱）</p></label>
 				<div class="mui-numbox">
 					<button class="mui-btn mui-btn-numbox-minus" type="button">-</button>
-					<input name="agreelyNum" class="mui-input-numbox" type="number" />
+					<input name="agreeNum" class="mui-input-numbox" type="number" th:value="*{applyNum}" />
 					<button class="mui-btn mui-btn-numbox-plus" type="button">+</button>
 				</div>
 			</div>
 			<div class="mui-input-row">
 				<label>单价</label>
-				<input type="number" name="agreeUnitPric">
+				<input type="number" name="agreeUnitPric" th:value="*{applyUnitPric}" >
 			</div>
 			<div class="mui-input-row" style="height: 100px">
 				<label>批准备注</label>

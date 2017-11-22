@@ -63,17 +63,21 @@
 			            <div class="mui-table">
 			                <div class="mui-table-cell mui-col-xs-10">
 		                    	<div class="mui-row mui-ellipsis">
-		                    		<div class="mui-col-xs-4">
-		                    			<span class="mui-h5">数量:</span><span th:unless="${order.applyNum} eq null" th:text="${order.applyNum}+箱">100箱</span>
+		                    		<div class="mui-row">
+			                    		<div class="mui-col-xs-6">
+			                    			<span class="mui-h5">数量:</span><span th:unless="${order.applyNum} eq null" th:text="${order.applyNum}+箱">100箱</span>
+			                    		</div>
+			                    		<div class="mui-col-xs-6">
+			                    			<span class="mui-h5">总价:</span><span th:unless="${order.applyAmt} eq null" th:text="￥+${order.applyAmt}">￥70</span>
+			                    		</div>
 		                    		</div>
-		                    		<div class="mui-col-xs-4">
-		                    			<span class="mui-h5">单价:</span><span th:unless="${order.applyUnitPric} eq null" th:text="￥+${order.applyUnitPric}">￥70</span>
-		                    		</div>
-		                    		<div class="mui-col-xs-4">
-		                    			<span class="mui-h5">总价:</span><span th:unless="${order.applyAmt} eq null" th:text="￥+${order.applyAmt}">￥70</span>
+		                    		<div class="mui-row" style="padding-top : 4px">
+			                    		<div class="mui-col-xs-6">
+			                    			<span class="mui-h5">单价:</span><span th:unless="${order.applyUnitPric} eq null" th:text="￥+${order.applyUnitPric}">￥70</span>
+			                    		</div>
 		                    		</div>
 		                    	</div>
-			                    <h5>2017年11月2日 10:38:01</h5>
+			                    <h5 th:text="${#dates.format(order.createTime, 'yyyy年MM月dd日 HH:mm:ss')}">2017年11月2日 10:38:01</h5>
 			                    <p class="mui-h6" th:text="${order.applyMemo}"></p>
 			                </div>
 			                <div class="mui-table-cell mui-col-xs-2 mui-text-right">
@@ -96,17 +100,21 @@
 			            <div class="mui-table">
 			                <div class="mui-table-cell mui-col-xs-10">
 		                    	<div class="mui-row mui-ellipsis">
-		                    		<div class="mui-col-xs-4">
-		                    			<span class="mui-h5">数量:</span><span th:unless="${order.agreeNum} eq null" th:text="${order.agreeNum}+箱">100箱</span>
+		                    		<div class="mui-row">
+			                    		<div class="mui-col-xs-6">
+			                    			<span class="mui-h5">数量:</span><span th:unless="${order.agreeNum} eq null" th:text="${order.agreeNum}+箱">100箱</span>
+			                    		</div>
+			                    		<div class="mui-col-xs-6">
+			                    			<span class="mui-h5">总价:</span><span th:unless="${order.agreeAmt} eq null" th:text="￥+${order.agreeAmt}">￥70</span>
+			                    		</div>
 		                    		</div>
-		                    		<div class="mui-col-xs-4">
-		                    			<span class="mui-h5">单价:</span><span th:unless="${order.agreeUnitPric} eq null" th:text="￥+${order.agreeUnitPric}">￥70</span>
-		                    		</div>
-		                    		<div class="mui-col-xs-4">
-		                    			<span class="mui-h5">总价:</span><span th:unless="${order.agreeAmt} eq null" th:text="￥+${order.agreeAmt}">￥70</span>
+		                    		<div class="mui-row" style="padding-top : 4px">
+			                    		<div class="mui-col-xs-6">
+			                    			<span class="mui-h5">单价:</span><span th:unless="${order.agreeUnitPric} eq null" th:text="￥+${order.agreeUnitPric}">￥70</span>
+			                    		</div>
 		                    		</div>
 		                    	</div>
-			                    <h5>2017年11月2日 10:38:01</h5>
+			                    <h5 th:text="${#dates.format(order.createTime, 'yyyy年MM月dd日 HH:mm:ss')}">2017年11月2日 10:38:01</h5>
 			                    <p class="mui-h6" th:text="${order.agreeMemo}"></p>
 			                </div>
 			                <div class="mui-table-cell mui-col-xs-2 mui-text-right">
@@ -129,17 +137,21 @@
 			            <div class="mui-table">
 			                <div class="mui-table-cell mui-col-xs-10">
 		                    	<div class="mui-row mui-ellipsis">
-		                    		<div class="mui-col-xs-4">
-		                    			<span class="mui-h5">数量:</span><span th:unless="${order.agreeNum} eq null" th:text="${order.agreeNum}+箱">100箱</span>
+		                    		<div class="mui-row">
+			                    		<div class="mui-col-xs-6">
+			                    			<span class="mui-h5">数量:</span><span th:unless="${order.agreeNum} eq null" th:text="${order.agreeNum}+箱">100箱</span>
+			                    		</div>
+			                    		<div class="mui-col-xs-6">
+			                    			<span class="mui-h5">总价:</span><span th:unless="${order.agreeAmt} eq null" th:text="￥+${order.agreeAmt}">￥70</span>
+			                    		</div>
 		                    		</div>
-		                    		<div class="mui-col-xs-4">
-		                    			<span class="mui-h5">单价:</span><span th:unless="${order.agreeUnitPric} eq null" th:text="￥+${order.agreeUnitPric}">￥70</span>
-		                    		</div>
-		                    		<div class="mui-col-xs-4">
-		                    			<span class="mui-h5">总价:</span><span th:unless="${order.agreeAmt} eq null" th:text="￥+${order.agreeAmt}">￥70</span>
+		                    		<div class="mui-row" style="padding-top : 4px">
+			                    		<div class="mui-col-xs-6">
+			                    			<span class="mui-h5">单价:</span><span th:unless="${order.agreeUnitPric} eq null" th:text="￥+${order.agreeUnitPric}">￥70</span>
+			                    		</div>
 		                    		</div>
 		                    	</div>
-			                    <h5>2017年11月2日 10:38:01</h5>
+			                    <h5 th:text="${#dates.format(order.createTime, 'yyyy年MM月dd日 HH:mm:ss')}">2017年11月2日 10:38:01</h5>
 			                    <p class="mui-h6" th:text="${order.agreeMemo}"></p>
 			                </div>
 			                <div class="mui-table-cell mui-col-xs-2 mui-text-right">

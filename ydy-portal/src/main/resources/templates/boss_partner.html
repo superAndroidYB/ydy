@@ -24,7 +24,7 @@
 		<ul class="mui-table-view" th:if="${#lists.size(unUserList)} gt 0">
 		    <li class="mui-table-view-cell mui-media" th:each="user : ${unUserList}">
 		        <a th:href="@{/confirm(id=${user.id})}" href="javascript:;" class="mui-navigate-right">
-		            <img class="mui-media-object mui-pull-left" src="images/shuijiao.jpg">
+		            <img class="mui-media-object mui-pull-left" th:src="${user.headimgurl} eq null ? 'images/default_head.jpg' : ${user.headimgurl}" >
 		            <div class="mui-media-body" >
 		               <span th:text="${user.userName}">张三</span>
 		                <p class='mui-ellipsis' th:text="${user.userMobile}">广东 深圳</p>
@@ -39,15 +39,11 @@
 		<div style="background-color: #eae9e9;">
 			<p style="padding: 10px;margin-bottom: 0px;"><span class="mui-icon mui-icon-person"></span>全部合伙人</p>
 		</div>
-		
-		<div class="mui-input-row mui-search" th:if="${#lists.size(allUserList)} gt 0">
-		    <input type="search" class="mui-input-clear" placeholder="输入客户姓名或电话进行搜索">
-		</div>
 		<div class="mui-row" style="background-color: #ffffff; padding-left : 20px; padding-right : 20px;" th:if="${#lists.size(allUserList)} gt 0">
 	        <div class="mui-col-xs-3" th:each="user : ${allUserList}">
 	            <div style="text-align: center;">
-	            	<a th:href="@{/confirm(id=${user.id})}">
-	            		<img src="images/muwu.jpg" width="50px" height="50px" style="margin-top: 10px;" class="img-circle">
+	            	<a th:href="@{/bosspartner(id=${user.id})}">
+	            		<img th:src="${user.headimgurl} eq null ? 'images/default_head.jpg' : ${user.headimgurl}" width="50px" height="50px" style="margin-top: 10px;" class="img-circle">
 	            		<p th:text="${user.userName}">张三</p>
 	            	</a>
 	            </div>

@@ -13,7 +13,7 @@ import javax.persistence.Transient;
 
 @Entity
 @Table(name = "ydy_user")
-public class User {
+public class User extends WxUser{
 
 	@Id
 	@Column(name = "ID_", length = 50)
@@ -191,4 +191,5 @@ public class User {
 	public void setNextNum(int nextNum) {
 		this.nextNum = nextNum;
 	}
+	
 }

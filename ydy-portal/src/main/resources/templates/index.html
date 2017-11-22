@@ -74,14 +74,14 @@
 	<div>
 		<div class="bg bg-blur"></div>
 		<div class="content content-front">
-			<img src="images/muwu.jpg" width="100px" height="100px"
+			<img th:src="${session.USER.headimgurl} eq null ? 'images/default_head.jpg' : ${session.USER.headimgurl}"  width="100px" height="100px"
 				style="margin-top: 10px;" class="img-circle">
 			<h2>
-				<strong >张三</strong><!-- th:text="${user.userName}" -->
+				<strong th:text="${session.USER.userName}">张三</strong><!-- th:text="${user.userName}" -->
 			</h2>
 		</div>
 	</div>
-	<div class="mui-content">
+	<div class="mui-content" th:object="${indexDto}">
 		<div class="mui-row">
 	        <div class="mui-col-sm-6 mui-col-xs-12">
 	            <div class="mui-card" id="dingdanzhongxin">
@@ -90,7 +90,7 @@
 						<img src="images/dingdanzhongxin.png" />
 						<div class="mui-media-body">
 							订单中心
-							<p>点击查看</p>	
+							<p th:text="*{orderMsg}">点击查看</p>	
 						</div>
 					</div>
 				</div>
@@ -102,7 +102,7 @@
 						<img src="images/hehuorenzhongxin.png" />
 						<div class="mui-media-body">
 							合伙人中心
-							<p>1个申请未处理</p>
+							<p th:text="*{partnerMsg}">1个申请未处理</p>
 						</div>
 					</div>
 				</div>
@@ -114,8 +114,8 @@
 			<div class="mui-card-header mui-card-media">
 				<img src="images/xiaoshoujixiao.png" />
 				<div class="mui-media-body">
-					2017年8月销售总览
-					<p>生成于2017年 09月 01日 13:00</p>
+					<span th:text="*{month}+销售总览">2017年8月销售总览</span>
+					<p th:text="生成于+*{getTime}">生成于2017年 09月 01日 13:00</p>
 				</div>
 			</div>
 			<!--内容区-->
@@ -123,11 +123,11 @@
 				<div class="mui-row" style="text-align: center;">
 					<div class="mui-col-sm-6 mui-col-xs-12">
 						<h3>月度出货量</h3>
-						<h3 style="color: green;">888888</h3>
+						<h3 style="color: green;" th:text="*{shippingQty}">888888</h3>
 					</div>
 					<div class="mui-col-sm-6 mui-col-xs-12">
 						<h3>月度销售额</h3>
-						<h3 style="color: green;">888888</h3>
+						<h3 style="color: green;" th:text="*{saleAmt}">888888</h3>
 					</div>
 				</div>
 			</div>
@@ -140,14 +140,14 @@
 			<div class="mui-card-header mui-card-media">
 				<img src="images/tuozhanjixiao.png" />
 				<div class="mui-media-body">
-					2017年8月拓展总览
-					<p>点击查看详情</p>
+					<span th:text="*{month}+拓展总览">2017年8月拓展总览</span>
+					<p th:text="生成于+*{getTime}">生成于2017年 09月 01日 13:00</p>
 				</div>
 			</div>
 			<!--内容区-->
 			<div class="mui-card-content">
 				<div class="mui-row" style="text-align: center;">
-					<h3>本月新增合伙人<span style="font-size: 38px; color: green; padding: 10px">8</span>名</h3>
+					<h3>本月新增合伙人<span style="font-size: 38px; color: green; padding: 10px" th:text="*{addPartnerNum}">8</span>名</h3>
 				</div>
 			</div>
 			<!--页脚，放置补充信息或支持的操作-->
@@ -159,14 +159,14 @@
 			<div class="mui-card-header mui-card-media">
 				<img src="images/fenhong.png" />
 				<div class="mui-media-body">
-					2017年8月分红总览
-					<p>点击查看详情</p>
+					<span th:text="*{month}+分红总览">2017年8月分红总览</span>
+					<p th:text="生成于+*{getTime}">生成于2017年 09月 01日 13:00</p>
 				</div>
 			</div>
 			<!--内容区-->
 			<div class="mui-card-content">
 				<div class="mui-row" style="text-align: center;">
-					<h3>本月需要发放分红<span style="font-size: 38px; color: green; padding: 10px">8888.00</span>RMB</h3>
+					<h3>本月需要发放分红<span style="font-size: 38px; color: green; padding: 10px" th:text="*{dividendAmt}">8888.00</span>RMB</h3>
 				</div>
 			</div>
 			<!--页脚，放置补充信息或支持的操作-->
@@ -184,6 +184,7 @@
 			setTimeout(function(){
 				$("#dingdanzhongxin").removeClass("hit");
 			},200);
+			window.location.href="bossOrder";
 		});
 		
 		$("#hehuoren").on("click",function(){

@@ -17,32 +17,20 @@
 </head>
 <body>
 	<div class="mui-content">
+		<div style="text-align: center;" th:unless="${#lists.size(userList)} gt 0">
+	    	<p>暂无数据！</p>
+	    </div>
 		<ul class="mui-table-view">
-			<li class="mui-table-view-cell mui-media">
-				<a href="javascript:;" class="mui-navigate-right">
-					<img class="mui-media-object mui-pull-left" src="images/shuijiao.jpg">
+			<li class="mui-table-view-cell mui-media" th:each="partner : ${userList}">
+				<a th:href="@{/bosspartner(id=${partner.id})}" class="mui-navigate-right">
+					<img class="mui-media-object mui-pull-left" th:src="${partner.headimgurl} eq null ? 'images/default_head.jpg' : ${partner.headimgurl}">
 					<div class="mui-media-body">
-						张三
-						<p class='mui-ellipsis'>2017-10-22</p>
+						<span th:text="${partner.userName}">张三</span>
+						<p class='mui-ellipsis' th:text="${#dates.format(partner.createTime, 'yyyy年MM月dd日 HH:mm:ss')}">2017-10-22</p>
 					</div>
-					<span class="mui-badge mui-badge-primary">33</span>
+					<span class="mui-badge mui-badge-primary" th:if="${partner.nextNum} gt 0" th:text="${partner.nextNum}">33</span>
 				</a>
 			</li>
-			<li class="mui-table-view-cell mui-media"><a href="javascript:;">
-					<img class="mui-media-object mui-pull-left"
-					src="images/muwu.jpg">
-					<div class="mui-media-body">
-						木屋
-						<p class='mui-ellipsis'>想要这样一间小木屋，夏天挫冰吃瓜，冬天围炉取暖.</p>
-					</div>
-			</a></li>
-			<li class="mui-table-view-cell mui-media"><a href="javascript:;">
-					<img class="mui-media-object mui-pull-left" src="images/cbd.jpg">
-					<div class="mui-media-body">
-						CBD
-						<p class='mui-ellipsis'>烤炉模式的城，到黄昏，如同打翻的调色盘一般.</p>
-					</div>
-			</a></li>
 		</ul>
 	</div>
 

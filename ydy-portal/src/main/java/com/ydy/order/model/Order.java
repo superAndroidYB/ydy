@@ -14,7 +14,7 @@ import javax.persistence.Table;
 import com.ydy.user.model.User;
 
 @Entity
-@Table(name = "YDY_ORDER")
+@Table(name = "ydy_order")
 public class Order {
 
 	@Id
@@ -64,8 +64,8 @@ public class Order {
 	@Column(name = "AGREE_TIME_")
 	private Date agreeTime;
 	
-	@Column(name = "FIRST_FLAG_")
-	private Date firstFlag;
+	@Column(name = "FIRST_FLAG_", length = 1)
+	private String firstFlag;
 
 	public String getId() {
 		return id;
@@ -187,12 +187,14 @@ public class Order {
 		this.user = user;
 	}
 
-	public Date getFirstFlag() {
+	public String getFirstFlag() {
 		return firstFlag;
 	}
 
-	public void setFirstFlag(Date firstFlag) {
+	public void setFirstFlag(String firstFlag) {
 		this.firstFlag = firstFlag;
 	}
+
+
 
 }

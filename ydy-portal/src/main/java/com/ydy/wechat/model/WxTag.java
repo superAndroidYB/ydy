@@ -6,33 +6,43 @@ import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 
-public class UserTag {
-	private String name;
+public class WxTag {
 
-	public String getName() {
-		return name;
+	private Tag tag;
+
+	public Tag getTag() {
+		return tag;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setTag(Tag tag) {
+		this.tag = tag;
 	}
 
 	@Override
 	public String toString() {
-		return "UserTag [name=" + name + "]";
+		return "WxTag [tag=" + tag + "]";
 	}
-	
-	/**
-	 * obj --> json
-	 * @return
-	 * @throws JsonGenerationException
-	 * @throws JsonMappingException
-	 * @throws IOException
-	 */
+
 	public String toJson() throws JsonGenerationException, JsonMappingException, IOException {
 		ObjectMapper mapper = new ObjectMapper();
 		return mapper.writeValueAsString(this);
 	}
-	
-	
+
+	public static class Tag {
+
+		private String name;
+
+		public void setName(String name) {
+			this.name = name;
+		}
+
+		public String getName() {
+			return name;
+		}
+
+		@Override
+		public String toString() {
+			return "Tag [name=" + name + "]";
+		}
+	}
 }

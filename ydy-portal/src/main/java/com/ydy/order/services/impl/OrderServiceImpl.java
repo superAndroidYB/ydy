@@ -1,5 +1,6 @@
 package com.ydy.order.services.impl;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -7,6 +8,7 @@ import java.util.UUID;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import com.ydy.dto.ResponseDto;
 import com.ydy.order.model.Order;
@@ -28,8 +30,11 @@ public class OrderServiceImpl implements IOrderService {
 		order.setId(UUID.randomUUID().toString());
 		order.setUser(user);
 		order.setStatus(Constants.OrderStatus.ORDER_APPLY.getCode());
+		order.setCreateTime(new Date());
+		order.setApplyUnitPric(new BigDecimal(70));
+		order.setApplyAmt(new BigDecimal(70).multiply(order.getApplyNum()));
 		Order save = orderDao.save(order);
-		return new ResponseDto(true, "成功", save);
+		return new ResponseDto(true, "成功", null);
 	}
 
 
@@ -42,9 +47,14 @@ public class OrderServiceImpl implements IOrderService {
 			orderDB.setAgreeTime(new Date());
 			orderDB.setAgreeUnitPric(order.getAgreeUnitPric());
 			orderDB.setAgreeAmt(order.getAgreeNum().multiply(order.getAgreeUnitPric()));
-			order.setStatus(Constants.OrderStatus.ORDER_CONFIRM.getCode());
+			orderDB.setStatus(Constants.OrderStatus.ORDER_CONFIRM.getCode());
+			
+			List<Order> exitsOrder = orderDao.findByStatusAndUserId(Constants.OrderStatus.ORDER_CONFIRM.getCode(), orderDB.getUser().getId());
+			if(CollectionUtils.isEmpty(exitsOrder)){
+				orderDB.setFirstFlag(Constants.YES);
+			}
 			Order save = orderDao.save(orderDB);
-			return new ResponseDto(true, "成功", save);
+			return new ResponseDto(true, "成功", null);
 		}
 		return new ResponseDto(false, "参数缺失！");
 	}
@@ -61,7 +71,7 @@ public class OrderServiceImpl implements IOrderService {
 			//orderDB.setAgreeAmt(order.getAgreelyNum().multiply(order.getAgreeUnitPric()));
 			order.setStatus(Constants.OrderStatus.ORDER_REJECT.getCode());
 			Order save = orderDao.save(orderDB);
-			return new ResponseDto(true, "成功", save);
+			return new ResponseDto(true, "成功", null);
 		}
 		return new ResponseDto(false, "参数缺失！");
 	}
@@ -75,7 +85,11 @@ public class OrderServiceImpl implements IOrderService {
 
 	@Override
 	public List<Order> getOrderListByStatus(String status,User user) {
-		return orderDao.findByStatusAndUserId(status, user.getId());
+		if(user == null){
+			return orderDao.findByStatus(status);
+		}else{
+			return orderDao.findByStatusAndUserId(status, user.getId());
+		}
 	}
 
 }

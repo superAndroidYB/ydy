@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.ydy.dto.IndexDto;
 import com.ydy.dto.ResponseDto;
+import com.ydy.user.model.AddressDto;
 import com.ydy.user.model.User;
 
 public interface IUserService {
@@ -14,6 +15,10 @@ public interface IUserService {
 	public User doUserRegister(User user);
 	
 	public User findUserById(String id);
+	
+	public User findUserByOpenid(String openid);
+	
+	public User saveUser(User user);
 	
 	public ResponseDto doRegisterInfo(User user);
 	
@@ -44,5 +49,7 @@ public interface IUserService {
 	 * @return
 	 */
 	public int getNextUserNum(User user);
+	
+	public List<AddressDto> getAddressByUser(User user);
 	
 }
