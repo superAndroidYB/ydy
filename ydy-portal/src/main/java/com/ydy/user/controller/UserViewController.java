@@ -16,6 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.soecode.wxtools.api.IService;
 import com.soecode.wxtools.api.WxConsts;
@@ -33,7 +34,7 @@ import com.ydy.utils.Constants;
 
 @Controller
 public class UserViewController {
-
+	
 	private IService iService = new WxService();
 
 	@Resource(name = IUserService.BEAN_ID)
@@ -45,19 +46,20 @@ public class UserViewController {
 
 	@RequestMapping(path = "/", method = { RequestMethod.GET, RequestMethod.POST })
 	public String wxEntry(HttpServletResponse response) throws IOException, WxErrorException {
-		response.sendRedirect(iService.oauth2buildAuthorizationUrl("http://superandroidyb.vicp.io/ydy/entry",
-				WxConsts.OAUTH2_SCOPE_USER_INFO, "abc"));
-		return "index";
+		return "redirect:"+iService.oauth2buildAuthorizationUrl("http://superandroidyb.vicp.io/ydy/entry",
+				WxConsts.OAUTH2_SCOPE_USER_INFO, "abc");
 	}
 
 	@RequestMapping(path = "/entry", method = { RequestMethod.GET, RequestMethod.POST })
-	public String entry(String code, String state) throws WxErrorException {
-		WxOAuth2AccessTokenResult oauth2ToGetAccessToken = (WxOAuth2AccessTokenResult) session.getAttribute(code);
-		if (oauth2ToGetAccessToken == null) {
+	public String entry(String code, String state, Model model) throws WxErrorException {
+		WxOAuth2AccessTokenResult oauth2ToGetAccessToken = null;
+		if(Constants.accessTokenMap.containsKey(code)){
+			oauth2ToGetAccessToken = Constants.accessTokenMap.get(code);
+		}else{
 			System.out.println("=================code:" + code);
 			oauth2ToGetAccessToken = iService.oauth2ToGetAccessToken(code);
 			oauth2ToGetAccessToken = iService.oauth2ToGetRefreshAccessToken(oauth2ToGetAccessToken.getRefresh_token());
-			session.setAttribute(code, oauth2ToGetAccessToken);
+			Constants.accessTokenMap.put(code, oauth2ToGetAccessToken);
 		}
 		System.out.println("=================oauth2ToGetAccessToken:" + oauth2ToGetAccessToken);
 		User user = userService.findUserByOpenid(oauth2ToGetAccessToken.getOpenid());
@@ -71,14 +73,23 @@ public class UserViewController {
 			BeanUtils.copyProperties(wxUser, user);
 			userService.saveUser(user);
 			System.out.println("=================wxUser:" + wxUser.toString());
-			session.setAttribute(Constants.WXUSER, wxUser);
+			session.setAttribute(Constants.USER, user);
 			return "register";
 		} else {
 			session.setAttribute(Constants.USER, user);
 			if (Constants.UserType.USER_TYPE_BOSS.getCode().equals(user.getUserType())) {
 				return "index";
+			} else if(Constants.UserType.USER_TYPE_PARTNER.getCode().equals(user.getUserType())){
+				if(Constants.UserStatus.USER_STATUS_REGISTER.getCode().equals(user.getStatus())){
+					model.addAttribute("tip", "注册成功！");
+					return "wait";
+				}else{
+					user.setNextNum(userService.getNextUserNum(user));
+					model.addAttribute("user", user);
+					return "user_center";
+				}
 			} else {
-				return "user_center";
+				return "register";
 			}
 		}
 	}

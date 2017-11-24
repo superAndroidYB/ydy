@@ -1,5 +1,11 @@
 package com.ydy.utils;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import com.soecode.wxtools.bean.result.WxOAuth2AccessTokenResult;
+
+
 public class Constants {
 	public static final String YES = "Y";
 	public static final String NO = "N";
@@ -16,6 +22,8 @@ public class Constants {
 	public static final String CREATE_TAG_URL = "https://api.weixin.qq.com/cgi-bin/tags/create?access_token=ACCESS_TOKEN";
 	public static final String QUERY_TAG_URL = "https://api.weixin.qq.com/cgi-bin/tags/get?access_token=ACCESS_TOKEN";
 	public static final String BATCH_TAGGING_URL = "https://api.weixin.qq.com/cgi-bin/tags/members/batchtagging?access_token=ACCESS_TOKEN";
+	
+	public static Map<String, WxOAuth2AccessTokenResult> accessTokenMap = new HashMap<>();
 	
 	public enum WxBtn {
 		INDEX("index","御鼎园"),
@@ -76,7 +84,7 @@ public class Constants {
 	}
 	
 	public enum UserType {
-		USER_TYPE_BOSS("0", "老板"), USER_TYPE_PARTNER("0", "合伙人");
+		USER_TYPE_BOSS("0", "老板"), USER_TYPE_PARTNER("1", "合伙人");
 
 		private String code;
 		private String desc;

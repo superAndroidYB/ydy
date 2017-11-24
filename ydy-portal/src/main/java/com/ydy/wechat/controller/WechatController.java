@@ -112,7 +112,7 @@ public class WechatController {
 		btn2.setKey(Constants.WxBtn.BOSS_ENTRY.getCode());
 		btn2.setName(Constants.WxBtn.BOSS_ENTRY.getDesc());
 		btn2.setType(WxConsts.BUTTON_VIEW);
-		btn2.setUrl("http://y18571849l.iask.in/ydy/");
+		btn2.setUrl("http://superandroidyb.vicp.io/ydy/");
 		button.add(btn2);
 		
 		menu.setButton(button);

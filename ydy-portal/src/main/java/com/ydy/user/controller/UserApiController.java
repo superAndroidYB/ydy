@@ -10,12 +10,14 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.taobao.api.ApiException;
 import com.taobao.api.response.AlibabaAliqinFcSmsNumSendResponse;
 import com.ydy.dto.ResponseDto;
 import com.ydy.user.model.AddressDto;
@@ -48,12 +50,12 @@ public class UserApiController {
 		map.put("code", code);
 		System.out.println("code:"+code);
 		AlibabaAliqinFcSmsNumSendResponse res = null;
-//		try {
-//			res = smsClient.sendSms("1234", Constants.SmsTemplate.register, user.getUserMobile(), map);
-//		} catch (ApiException e) {
-//			e.printStackTrace();
-//		}
-		String errorCode = null;//res.getErrorCode();
+		try {
+			res = smsClient.sendSms("1234", Constants.SmsTemplate.register, user.getUserMobile(), map);
+		} catch (ApiException e) {
+			e.printStackTrace();
+		}
+		String errorCode = res.getErrorCode();
 		if (StringUtils.isEmpty(errorCode)) {
 			responseDto = new ResponseDto(true, "发送成功！");
 		} else {
@@ -64,7 +66,7 @@ public class UserApiController {
 	
 	@RequestMapping(path = "/doRegister", method = { RequestMethod.GET, RequestMethod.POST })
 	public ResponseEntity<ResponseDto> doRegister(Model model, User user, HttpSession session) {
-		ResponseDto responseDto;
+		ResponseDto responseDto = null;
 		boolean mobileExtis = userService.checkMobileExtis(user.getUserMobile());
 		if(mobileExtis){
 			responseDto = new ResponseDto(false, "这个手机号已经注册过啦！");
@@ -74,12 +76,25 @@ public class UserApiController {
 		String code = (String) session.getAttribute("randomCode");
 		System.out.println("code:"+code);
 		if(StringUtils.equals(user.getRondomCode(), code)){
-			user.setUserType(Constants.UserType.USER_TYPE_PARTNER.getCode());
-			responseDto = new ResponseDto(true, "注册成功！");
-			user.setPassword(MDFiveUtils.encrypt(user.getPassword()));
-			User userDB = userService.doUserRegister(user);
-			responseDto.setData(userDB);
-			model.addAttribute(Constants.USER, userDB);
+			User userSession = (User) session.getAttribute(Constants.USER);
+			if(userSession != null){
+				User userDB = userService.findUserById(userSession.getId());
+				userDB.setUserMobile(user.getUserMobile());
+				userDB.setPassword(MDFiveUtils.encrypt(user.getPassword()));
+				userDB = userService.saveUser(userDB);
+				responseDto = new ResponseDto(true, "注册成功！");
+				responseDto.setData(userDB);
+				model.addAttribute(Constants.USER, userDB);
+			}else{
+				user.setUserType(Constants.UserType.USER_TYPE_PARTNER.getCode());
+				responseDto = new ResponseDto(true, "注册成功！");
+				user.setPassword(MDFiveUtils.encrypt(user.getPassword()));
+				user.setUserType(Constants.UserType.USER_TYPE_PARTNER.getCode());
+				user.setStatus(Constants.UserStatus.USER_STATUS_REGISTER.getCode());
+				User userDB = userService.doUserRegister(user);
+				responseDto.setData(userDB);
+				model.addAttribute(Constants.USER, userDB);
+			}
 		}else{
 			responseDto = new ResponseDto(false, "验证码不正确，请输入短信中收到的验证码");
 		}

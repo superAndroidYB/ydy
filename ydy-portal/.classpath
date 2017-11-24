@@ -31,5 +31,10 @@
 	<classpathentry kind="lib" path="src/main/lib/wx-tools-2.0.0.jar"/>
 	<classpathentry kind="lib" path="src/main/lib/taobao-sdk-java-auto_1455552377940-20160607-source.jar"/>
 	<classpathentry kind="lib" path="src/main/lib/taobao-sdk-java-auto_1455552377940-20160607.jar"/>
+	<classpathentry kind="src" path=".apt_generated">
+		<attributes>
+			<attribute name="optional" value="true"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
